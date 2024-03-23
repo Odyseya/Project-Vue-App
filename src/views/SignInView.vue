@@ -8,25 +8,24 @@ const user = ref('')
 const password = ref('')
 
 const signIn = () => {
-	userStore.signIn(user.value, password.value)
+  userStore.signIn(user.value, password.value)
 }
 </script>
 
 <template>
-	<main>
-		<h1>Sign In View!</h1>
-		<label>
-			User:
-			<input type="text" v-model="user" />
-		</label>
-		<label>
-			Password:
-			<input type="password" v-model="password" />
-		</label>
+  <main>
+    <h1>Sign In View!</h1>
+    <label>
+      User:
+      <input type="text" v-model="user" />
+    </label>
+    <label>
+      Password:
+      <input type="password" v-model="password" />
+    </label>
 
-		<button @click="signIn">Sign In</button>
-	</main>
+    <button @click="signIn">Sign In</button>
+  </main>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>
