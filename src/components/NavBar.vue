@@ -14,9 +14,18 @@
         <RouterLink class="cursor-pointer" :to="{ name: 'about' }">About</RouterLink>
         <RouterLink class="cursor-pointer" to="/signin">Login</RouterLink>
         <li class="cursor-pointer">Logout</li>
+        <!-- <button @click="logout">Logout</button> -->
       </ul>
     </nav>
   </header>
 </template>
 
-<script setup></script>
+<script setup>
+// import { useUserStore } from '@/stores/userStore';
+
+// const userStore = useUserStore();
+
+// const logout = () => {
+//  userStore.logout();
+// };
+</script>

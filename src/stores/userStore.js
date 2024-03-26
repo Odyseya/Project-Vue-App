@@ -1,17 +1,22 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { fetchActualUser, createNewUser, logIn } from '@/api/userApi'
-
-import { useRouter } from 'vue-router'
+import { fetchActualUser, createNewUser, logIn, logOut } from '@/api/userApi'
+import { setupAuthListener } from '@/api/userApi'
+// import { useRouter } from 'vue-router'
 
 export const useUserStore = defineStore('user', () => {
   // State
   const user = ref(undefined)
 
   const errorMessage = ref('')
+  let authListener = null
 
-  // Getters
-  //define computed properties based on the state
+  // Setup auth listener when the store is initialized
+  setupAuthListener({ user }).then((listener) => {
+    authListener = listener
+  })
+
+  // Getters  // define computed properties based on the state
 
   // Actions
 
@@ -21,6 +26,8 @@ export const useUserStore = defineStore('user', () => {
     try {
       user.value = await fetchActualUser()
     } catch (error) {
+      // if fetchActualUser returns null, Interprets null from data layer
+      // as user not being authenticated updates user state to null.
       if (error.code === '401') {
         user.value = null
         return
@@ -36,6 +43,7 @@ export const useUserStore = defineStore('user', () => {
   //   }
   // }
 
+  // ADD router.push({name: "signIn"}); ?
   async function register(email, password) {
     try {
       user.value = await createNewUser(email, password)
@@ -54,6 +62,23 @@ export const useUserStore = defineStore('user', () => {
     }
   }
 
+  async function signOut() {
+    try {
+      await logOut()
+      user.value = null // Ensure the user's state is cleared / SHOULD BE UNDEFINED?
+    } catch (error) {
+      console.error('Failed to log out:', error.message)
+      // Optionally, handle the error, e.g., by showing an error message
+    }
+  }
+
+  function unsubscribeAuthListener() {
+    if (authListener) {
+      authListener.unsubscribe()
+      authListener = null
+    }
+  }
+
   return {
     // State
     user,
@@ -63,7 +88,8 @@ export const useUserStore = defineStore('user', () => {
     // signUp,
     register,
     signIn,
-
-    errorMessage
+    signOut,
+    errorMessage,
+    unsubscribeAuthListener
   }
 })

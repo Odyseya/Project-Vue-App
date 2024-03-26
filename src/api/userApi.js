@@ -34,3 +34,38 @@ export const logIn = async (email, password) => {
 
   return user
 }
+
+// ADDING LOGOUT
+export const logOut = async () => {
+  try {
+    const { error } = await supabase.auth.signOut()
+    if (error) {
+      throw new Error(error.message)
+    }
+  } catch (error) {
+    console.error('Error signing out:', error.message)
+    throw error
+    // Rethrow the error to be handled by the caller
+  }
+}
+
+// ADDING Auth event listener
+
+export const setupAuthListener = async (store) => {
+  const { data: authListener } = await supabase.auth.onAuthStateChange((event, session) => {
+    console.log(event, session)
+
+    if (event === 'SIGNED_IN') {
+      store.user = session.user
+    } else if (event === 'SIGNED_OUT') {
+      store.user = null
+    } else if (event === 'USER_UPDATED') {
+      store.user = session.user
+    }
+  })
+
+  return authListener
+}
+
+// after call authListener.unsubscribe() Call unsubscribe to remove the callback
+// when the component is unmounted - added in app?

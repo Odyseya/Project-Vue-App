@@ -17,6 +17,16 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useUserStore } from '@/stores/userStore'
+import { onUnmounted } from 'vue'
+
+const userStore = useUserStore()
+
+//ensure that the auth listener is properly cleaned up.
+onUnmounted(() => {
+  userStore.unsubscribeAuthListener()
+})
+
 // import NavBar from './components/NavBar.vue'
 // suggested by iron portal
 // import { onMounted } from 'vue'
