@@ -9,23 +9,32 @@
         <!-- <RouterView /> -->
         <h1 class="text-lg">To Do App</h1>
       </div>
+
       <ul class="flex flex-1 justify-end gap-x-10">
-        <RouterLink class="cursor-pointer" to="/">Home</RouterLink>
-        <RouterLink class="cursor-pointer" :to="{ name: 'about' }">About</RouterLink>
-        <RouterLink class="cursor-pointer" to="/signin">Login</RouterLink>
-        <li class="cursor-pointer">Logout</li>
-        <!-- <button @click="logout">Logout</button> -->
+        <li><RouterLink class="cursor-pointer" to="/">Home</RouterLink></li>
+        <li><RouterLink class="cursor-pointer" :to="{ name: 'about' }">About</RouterLink></li>
+        <li><RouterLink class="cursor-pointer" to="/signin">Login</RouterLink></li>
+
+        <li @click="logout" class="cursor-pointer">Logout</li>
       </ul>
     </nav>
   </header>
 </template>
 
 <script setup>
-// import { useUserStore } from '@/stores/userStore';
+import { useUserStore } from '@/stores/userStore'
+import { useRouter } from 'vue-router'
 
-// const userStore = useUserStore();
+const router = useRouter()
+const userStore = useUserStore()
 
-// const logout = () => {
-//  userStore.logout();
-// };
+const logout = async () => {
+  try {
+    await userStore.signOut()
+    // redirect to the sign-in page or another appropriate page
+    router.push({ name: 'signin' })
+  } catch (error) {
+    console.error('Error logging out:', error.message)
+  }
+}
 </script>

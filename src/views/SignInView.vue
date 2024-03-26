@@ -25,7 +25,7 @@ const signIn = () => {
 
 <template>
   <main>
-    <form class="p-8 flex flex-col bg-light-grey rounded-md shadow-lg">
+    <form @submit.prevent="signIn" class="p-8 flex flex-col bg-light-grey rounded-md shadow-lg">
       <h1 class="text-3xl text-at-light-green mb-4">Login to your Account</h1>
 
       <div class="flex flex-col mb-2">
@@ -42,7 +42,7 @@ const signIn = () => {
       </label>
 
       <button
-        @click="signIn"
+        type="submit"
         class="mt-6 py-2 px-6 rounded-sm self-start text-sm text-white bg-at-light-green duration-200 border-solid border-2 border-transparent hover:border-white hover:bg-white hover:text-at-light-green"
       >
         Login using signIn funcion

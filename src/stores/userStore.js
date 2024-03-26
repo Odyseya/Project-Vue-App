@@ -51,6 +51,7 @@ export const useUserStore = defineStore('user', () => {
       console.error(error)
     }
   }
+  // Error: Password should be at least 6 characters.
 
   async function signIn(email, password) {
     try {

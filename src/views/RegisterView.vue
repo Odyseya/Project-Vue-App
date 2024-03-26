@@ -6,7 +6,7 @@ import { useUserStore } from '@/stores/userStore'
 const router = useRouter()
 // const email = ref(null);
 // const password = ref(null);
-const confirmPassword = ref(null)
+// const confirmPassword = ref(null)
 const errorMsg = ref(null)
 
 const userStore = useUserStore()
@@ -16,9 +16,17 @@ const email = ref('')
 const password = ref('')
 
 // to bind user's input (user, pass) to register action of userStore ?
-const register = () => {
-  // userStore.signIn(user.value, password.value)
-  userStore.register(email.value, password.value)
+// const register = () => {
+//   userStore.register(email.value, password.value)
+// }
+
+const register = async () => {
+  try {
+    await userStore.register(email.value, password.value)
+    router.push({ name: 'home' })
+  } catch (error) {
+    console.error(error)
+  }
 }
 </script>
 

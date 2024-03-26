@@ -3,11 +3,11 @@
     <div class="min-h-full font-Poppins box-border">
       <nav>
         <!-- styled tailwind -->
-        <!-- <NavBar /> -->
+        <NavBar />
         <!-- styled scoped: -->
-        <RouterLink to="/">Home</RouterLink>
+        <!-- <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
-        <RouterLink to="/signin">Login</RouterLink>
+        <RouterLink to="/signin">Login</RouterLink> -->
       </nav>
     </div>
   </header>
@@ -27,7 +27,7 @@ onUnmounted(() => {
   userStore.unsubscribeAuthListener()
 })
 
-// import NavBar from './components/NavBar.vue'
+import NavBar from './components/NavBar.vue'
 // suggested by iron portal
 // import { onMounted } from 'vue'
 // import { storeToRefs } from 'pinia'
@@ -65,7 +65,6 @@ nav {
   width: 100%;
   font-size: 12px;
   text-align: center;
-  margin-top: 2rem;
 }
 
 nav a.router-link-exact-active {
