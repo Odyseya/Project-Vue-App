@@ -11,11 +11,11 @@
       </div>
 
       <ul class="flex flex-1 justify-end gap-x-10">
-        <li><RouterLink class="cursor-pointer" to="/">Home</RouterLink></li>
-        <li><RouterLink class="cursor-pointer" :to="{ name: 'about' }">About</RouterLink></li>
-        <li><RouterLink class="cursor-pointer" to="/signin">Login</RouterLink></li>
-
-        <li @click="logout" class="cursor-pointer">Logout</li>
+        <RouterLink class="cursor-pointer" to="/">Home</RouterLink>
+        <RouterLink class="cursor-pointer" :to="{ name: 'about' }">About</RouterLink>
+        <!-- if logged show logout, otherwise login -->
+        <RouterLink v-if="!user" class="cursor-pointer" to="/signin">Login</RouterLink>
+        <li v-if="user" @click="logout" class="cursor-pointer">Logout</li>
       </ul>
     </nav>
   </header>
@@ -23,10 +23,14 @@
 
 <script setup>
 import { useUserStore } from '@/stores/userStore'
+import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
 const userStore = useUserStore()
+
+// added to rotate navbar sign/out visibility
+const user = computed(() => userStore.user)
 
 const logout = async () => {
   try {

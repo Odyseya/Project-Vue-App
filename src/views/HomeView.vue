@@ -1,4 +1,5 @@
 <script setup>
+import TaskItem from '@/components/TaskItem.vue'
 import { useTasksStore } from '@/stores/tasksStore'
 import { storeToRefs } from 'pinia'
 import { onMounted, ref } from 'vue'
@@ -33,15 +34,20 @@ onMounted(() => {
   <main>
     <h1>Home View!</h1>
 
-    <span>Tasks: {{ tasks.length }}</span>
+    <span>All Tasks: {{ tasks.length }}</span>
     <!-- <span>Incompleted tasks: {{ incompletedTasks.length }}</span> -->
+    <!-- <ul>
+      <li v-for="task in tasks" :key="task.id">{{ task.title }}</li>
+    </ul>  -->
+
     <ul>
-      <li v-for="task in tasks" :key="task.id">Title: {{ task.title }}</li>
+      <TaskItem v-for="(task, index) in tasks" :key="task.id" :title="task.title"></TaskItem>
+      <!-- @remove="task.splice(index, 1)" -->
     </ul>
 
     <label>
       Task title:
-      <input type="text" v-model="taskTitle" />
+      <input type="text" v-model="taskTitle" placeholder="new task" />
     </label>
 
     <button @click="_addTask">Add a task</button>
