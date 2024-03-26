@@ -4,16 +4,17 @@ import { storeToRefs } from 'pinia'
 import { onMounted, ref } from 'vue'
 
 const tasksStore = useTasksStore()
-const { tasks, incompletedTasks } = storeToRefs(tasksStore)
-
+const { tasks } = storeToRefs(tasksStore)
+// const { tasks } = storeToRefs(tasksStore)
 const taskTitle = ref('')
 
 const _addTask = async () => {
   const task = {
     // FIX USER ID THING
-    user_id: 'd5622b20-cb6a-4e98-8287-9ad212ccc77c',
+    user_id: '63af1ce3-5b03-4793-a97e-0bd27b548300',
     title: taskTitle.value,
-    isComplete: false
+    // isComplete: false
+    is_complete: false
   }
 
   // awaits task to be added then does fetch
@@ -32,14 +33,10 @@ onMounted(() => {
   <main>
     <h1>Home View!</h1>
 
-    <!-- cos nie dziala na dole  -->
-    <!-- <span>Tasks: {{ tasks.length }}</span>
-    <span>Incompleted tasks: {{ incompletedTasks.length }}</span>
+    <span>Tasks: {{ tasks.length }}</span>
+    <!-- <span>Incompleted tasks: {{ incompletedTasks.length }}</span> -->
     <ul>
-      <li v-for="task in tasks" :key="task.id"></li>
-      {{
-        tasks.title
-      }}
+      <li v-for="task in tasks" :key="task.id">Title: {{ task.title }}</li>
     </ul>
 
     <label>
@@ -47,7 +44,7 @@ onMounted(() => {
       <input type="text" v-model="taskTitle" />
     </label>
 
-    <button @click="_addTask">Add a task</button> -->
+    <button @click="_addTask">Add a task</button>
   </main>
 </template>
 

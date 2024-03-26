@@ -8,13 +8,18 @@ export const useTasksStore = defineStore('tasks', () => {
   const tasks = ref([])
 
   // Getters
+  // Getter for incompleted tasks
+  // const incompletedTasks = computed(() => {
+  //   return tasks.value.filter((task) => !task.isComplete)
+  // })
 
   // Actions
   async function fetchTasks() {
     //call to the API
     try {
       // update the state
-      tasks.value = fetchAllTasks()
+      tasks.value = await fetchAllTasks()
+      // tasks.value = fetchAllTasks()
     } catch (error) {
       console.error(error)
     }
@@ -51,6 +56,7 @@ export const useTasksStore = defineStore('tasks', () => {
     // State
     tasks,
     // Getters
+    // incompletedTasks,
     // Actions
     fetchTasks,
     createNewTask,

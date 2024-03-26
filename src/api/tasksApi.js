@@ -8,11 +8,9 @@ export const fetchAllTasks = async () => {
     // selecting all columns
     .select('*')
   // .order('id', { ascending: false })
-
   if (error) {
     throw new Error(error.message)
   }
-
   return data
 }
 
@@ -39,7 +37,7 @@ export const updateTask = async (id, updatedTask) => {
 
 // DELETE TASK
 export const deleteTask = async (id) => {
-  const { error } = await supabase.from(TABLE_NAME).delete().eq({ id: task.id })
+  const { error } = await supabase.from(TABLE_NAME).delete().eq({ id: id })
   // .match({ id: id })
 
   if (error) {
