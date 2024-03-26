@@ -35,15 +35,6 @@ export const useUserStore = defineStore('user', () => {
     }
   }
 
-  // async function signUp(email, password) {
-  //   try {
-  //     user.value = await createNewUser(email, password)
-  //   } catch (error) {
-  //     console.error(error)
-  //   }
-  // }
-
-  // ADD router.push({name: "signIn"}); ?
   async function register(email, password) {
     try {
       user.value = await createNewUser(email, password)
@@ -69,7 +60,6 @@ export const useUserStore = defineStore('user', () => {
       user.value = null // Ensure the user's state is cleared / SHOULD BE UNDEFINED?
     } catch (error) {
       console.error('Failed to log out:', error.message)
-      // Optionally, handle the error, e.g., by showing an error message
     }
   }
 

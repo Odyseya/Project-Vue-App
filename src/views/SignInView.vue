@@ -1,20 +1,31 @@
 <script setup>
 import { ref } from 'vue'
 import { useUserStore } from '@/stores/userStore'
+import { useRouter } from 'vue-router'
 // from video
 // import { useToast } from 'vue-toastification'
 // const toast = useToast()
 
 const userStore = useUserStore()
+const router = useRouter()
 
 // const user = ref('')
 const email = ref('')
 const password = ref('')
 
 // to bind user's input (user, pass) to signIn action of userStore ?
-const signIn = () => {
-  // userStore.signIn(user.value, password.value)
-  userStore.signIn(email.value, password.value)
+// const signIn = () => {
+// userStore.signIn(user.value, password.value)
+// userStore.signIn(email.value, password.value)
+// }
+
+const signIn = async () => {
+  try {
+    await userStore.signIn(email.value, password.value)
+    router.push({ name: 'home' })
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 // MOVE TO HOME SCREEN
