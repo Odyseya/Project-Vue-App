@@ -3,6 +3,7 @@ import HomeView from '@/views/HomeView.vue'
 import SignInView from '@/views/SignInView.vue'
 import AboutView from '@/views/AboutView.vue'
 import RegisterView from '@/views/RegisterView.vue'
+import NotFoundView from '@/views/NotFoundView.vue'
 
 import { useUserStore } from '@/stores/userStore'
 
@@ -30,7 +31,12 @@ const router = createRouter({
       path: '/register',
       name: 'register',
       component: () => import('@/views/RegisterView.vue')
-    }
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'not-found',
+      component: () => import('@/views/NotFoundView.vue')
+     }
   ]
 })
 
