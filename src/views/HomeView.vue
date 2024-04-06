@@ -1,20 +1,22 @@
 <script setup>
 import TaskItem from '@/components/TaskItem.vue'
 import { useTasksStore } from '@/stores/tasksStore'
+import { useUserStore } from '@/stores/userStore'
 import { storeToRefs } from 'pinia'
 import { onMounted, ref } from 'vue'
 
+const userStore = useUserStore(); 
 const tasksStore = useTasksStore()
 const { tasks } = storeToRefs(tasksStore)
-// const { tasks } = storeToRefs(tasksStore)
+const { user } = storeToRefs(userStore)
 const taskTitle = ref('')
 
-const _addTask = async () => {
+const _addTask = async (user) => {
+  console.log("userID: ", user.id)
   const task = {
     // FIX USER ID THING
-    user_id: '63af1ce3-5b03-4793-a97e-0bd27b548300',
+    user_id: user.id,
     title: taskTitle.value,
-    // isComplete: false
     is_complete: false
   }
 
@@ -28,6 +30,7 @@ const _addTask = async () => {
 onMounted(() => {
   console.log('Tasks state before fetchTasks:', tasks.value);
   tasksStore.fetchTasks()
+  userStore.fetchUser()
   console.log('Tasks state after fetchTasks:', tasks.value);
 })
 </script>
@@ -43,7 +46,7 @@ onMounted(() => {
     </ul>  -->
 
     <ul>
-      <TaskItem v-for="(task, index) in tasks" :key="task.id" :title="task.title"></TaskItem>
+      <TaskItem v-for="(task) in tasks" :key="task.id" :title="task.title"></TaskItem>
       <!-- @remove="task.splice(index, 1)" -->
     </ul>
 
@@ -52,7 +55,7 @@ onMounted(() => {
       <input type="text" v-model="taskTitle" placeholder="new task" />
     </label>
 
-    <button @click="_addTask">Add a task</button>
+    <button @click="_addTask(user)">Add a task</button>
   </main>
 </template>
 
