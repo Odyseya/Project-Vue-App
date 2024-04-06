@@ -18,7 +18,9 @@ export const useTasksStore = defineStore('tasks', () => {
     //call to the API
     try {
       // update the state
-      tasks.value = await fetchAllTasks()
+      const fetchedTasks = await fetchAllTasks();
+      console.log('Fetched tasks:', fetchedTasks);
+      tasks.value = fetchedTasks;
       // tasks.value = fetchAllTasks()
     } catch (error) {
       console.error(error)

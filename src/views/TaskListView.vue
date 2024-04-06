@@ -8,25 +8,29 @@
       :key="task.id"
       :class="task.value === true ? 'completed' : 'incompleted'"
     >
-      {{ task.text }} <span> {{ task.description }}</span
+      {{ task.title }} - {{ task.isDone ? 'Done' : 'Not Done' }}
       ><button class="delete-btn" @click="deleteTask(task.id)">x</button>
     </li>
   </ul>
 </template>
 
-<script setup>
-import { defineProps } from 'vue'
+<script>
+import { fetchAllTasks } from '@/api/tasksApi';
 
-const props = defineProps({
-  task: {
-    type: Array,
-    required: true
-  }
-})
-
-const emit = defineEmits(['taskDeleted'])
-
-const deleteTask = (id) => {
-  emit('taskDeleted', id)
-}
+export default {
+ data() {
+    return {
+      tasks: [],
+    };
+ },
+ async created() {
+    try {
+      const fetchedTasks = await fetchAllTasks();
+      console.log('Fetched tasks:', fetchedTasks);
+      this.tasks = fetchedTasks;
+    } catch (error) {
+      console.error('Failed to fetch tasks:', error);
+    }
+ },
+};
 </script>

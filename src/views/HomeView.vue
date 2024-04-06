@@ -26,7 +26,9 @@ const _addTask = async () => {
 }
 
 onMounted(() => {
+  console.log('Tasks state before fetchTasks:', tasks.value);
   tasksStore.fetchTasks()
+  console.log('Tasks state after fetchTasks:', tasks.value);
 })
 </script>
 

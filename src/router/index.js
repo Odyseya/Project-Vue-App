@@ -26,11 +26,15 @@ const router = createRouter({
       name: 'about',
       component: () => import('@/views/AboutView.vue')
     },
-
     {
       path: '/register',
       name: 'register',
       component: () => import('@/views/RegisterView.vue')
+    },
+    {
+      path: '/tasks/list',
+      name: 'list',
+      component: () => import('@/views/TaskListView.vue')
     },
     {
       path: '/:pathMatch(.*)*',

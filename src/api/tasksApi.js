@@ -5,9 +5,11 @@ const TABLE_NAME = 'tasks'
 export const fetchAllTasks = async () => {
   const { data, error } = await supabase
     .from(TABLE_NAME)
-    // selecting all columns
     .select('*')
+    // selecting all columns
   // .order('id', { ascending: false })
+  console.log("Data:", data);
+  console.log("Error:", error);
   if (error) {
     throw new Error(error.message)
   }
