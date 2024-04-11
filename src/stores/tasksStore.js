@@ -1,7 +1,14 @@
 import { supabase } from '@/api/supabase'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { fetchAllTasks, createTask, updateTask, deleteTask, markTaskAsComplete, markTaskAsIncomplete } from '@/api/tasksApi'
+import {
+  fetchAllTasks,
+  createTask,
+  updateTask,
+  deleteTaskById,
+  markTaskAsComplete,
+  markTaskAsIncomplete
+} from '@/api/tasksApi'
 
 export const useTasksStore = defineStore('tasks', () => {
   // State
@@ -18,9 +25,9 @@ export const useTasksStore = defineStore('tasks', () => {
     //call to the API
     try {
       // update the state
-      const fetchedTasks = await fetchAllTasks();
-      console.log('Fetched tasks:', fetchedTasks);
-      tasks.value = fetchedTasks;
+      const fetchedTasks = await fetchAllTasks()
+      console.log('Fetched tasks:', fetchedTasks)
+      tasks.value = fetchedTasks
       // tasks.value = fetchAllTasks()
     } catch (error) {
       console.error(error)
@@ -46,10 +53,11 @@ export const useTasksStore = defineStore('tasks', () => {
     }
   }
 
-  async function deleteTaskById(id) {
+  async function deleteTask(id) {
     try {
-      await deleteTask(id)
+      await deleteTaskById(id)
       // see if needed refetch tasks to update the state with the updated task
+      await fetchTasks()
     } catch (error) {
       console.error(error)
     }
@@ -82,7 +90,7 @@ export const useTasksStore = defineStore('tasks', () => {
     fetchTasks,
     createNewTask,
     updateExistingTaskById,
-    deleteTaskById,
+    deleteTask,
     markTaskAsCompleteById,
     markTaskAsIncompleteById
   }

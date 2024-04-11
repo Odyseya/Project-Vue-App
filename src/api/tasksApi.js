@@ -3,13 +3,11 @@ import { supabase } from '@/api/supabase'
 const TABLE_NAME = 'tasks'
 
 export const fetchAllTasks = async () => {
-  const { data, error } = await supabase
-    .from(TABLE_NAME)
-    .select('*')
-    // selecting all columns
+  const { data, error } = await supabase.from(TABLE_NAME).select('*')
+  // selecting all columns
   // .order('id', { ascending: false })
-  console.log("Data:", data);
-  console.log("Error:", error);
+  console.log('Data:', data)
+  console.log('Error:', error)
   if (error) {
     throw new Error(error.message)
   }
@@ -38,8 +36,9 @@ export const updateTask = async (id, updatedTask) => {
 }
 
 // DELETE TASK
-export const deleteTask = async (id) => {
-  const { error } = await supabase.from(TABLE_NAME).delete().eq({ id: id })
+export const deleteTaskById = async (id) => {
+  //.eq expects the column name and the value to match.
+  const { error } = await supabase.from(TABLE_NAME).delete().eq('id', id)
   // .match({ id: id })
 
   if (error) {
@@ -47,28 +46,28 @@ export const deleteTask = async (id) => {
   }
   return true
 }
+// export const deleteTask = async (task) => {
+//   const { error } = await supabase.from(TABLE_NAME).delete().eq('id', task.id)
+//   if (error) {
+//     throw new Error(error.message)
+//   }
+// }
 
 export const markTaskAsComplete = async (id) => {
-  const { error } = await supabase
-     .from('tasks')
-     .update({ isDone: true })
-     .eq('id', id);
- 
+  const { error } = await supabase.from('tasks').update({ isDone: true }).eq('id', id)
+
   if (error) {
-     throw new Error(error.message);
+    throw new Error(error.message)
   }
-  return true;
- };
+  return true
+}
 
 // MARK TASK AS INCOMPLETE
 export const markTaskAsIncomplete = async (id) => {
-  const { error } = await supabase
-     .from('tasks')
-     .update({ isDone: false })
-     .eq('id', id);
- 
+  const { error } = await supabase.from('tasks').update({ isDone: false }).eq('id', id)
+
   if (error) {
-     throw new Error(error.message);
+    throw new Error(error.message)
   }
-  return true;
+  return true
 }
