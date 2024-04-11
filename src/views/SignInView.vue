@@ -22,9 +22,11 @@ const password = ref('')
 const signIn = async () => {
   try {
     await userStore.signIn(email.value, password.value)
+    password.value = ''
     router.push({ name: 'home' })
   } catch (error) {
     console.error(error)
+    errorMessage.value = 'Wrong data provided.' // Set the message on error
   }
 }
 
@@ -65,7 +67,9 @@ const signIn = async () => {
     </form>
 
     <!-- Display the error message -->
-    <div v-if="userStore.errorMessage" class="text-red-500">{{ userStore.errorMessage }}</div>
+    <div v-if="userStore.errorMessage" class="text-red-500">
+      {{ userStore.errorMessage }}
+    </div>
   </main>
 </template>
 

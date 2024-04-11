@@ -9,6 +9,7 @@ const userStore = useUserStore()
 const tasksStore = useTasksStore()
 const { tasks } = storeToRefs(tasksStore)
 const { user } = storeToRefs(userStore)
+
 const taskTitle = ref('')
 
 const _addTask = async (user) => {
