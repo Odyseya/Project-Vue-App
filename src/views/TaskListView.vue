@@ -1,6 +1,6 @@
-<template>
+<!-- <template>
   <h3>Tasks</h3>
-  <!-- task -->
+
   <ul id="list" class="list">
     <li
       v-for="task in tasks"
@@ -36,4 +36,4 @@ export default {
     }
   }
 }
-</script>
+</script> -->

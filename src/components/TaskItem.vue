@@ -26,7 +26,7 @@ const _deleteTask = async () => {
     <input type="checkbox" id="checkbox" v-model="checked" />
     <label for="checkbox">Completed</label>
 
-    <button @click="_editTask">Edit</button>
-    <button @click="_deleteTask">Delete</button>
+    <button @click="_editTask" class="btn edit-btn">Edit</button>
+    <button @click="_deleteTask" class="btn delete-btn">Delete</button>
   </li>
 </template>

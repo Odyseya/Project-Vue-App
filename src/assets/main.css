@@ -2,18 +2,11 @@
 
 /* to chk later */
 
-/* #app {
+#app {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  /* padding: 2rem; */
   font-weight: normal;
-}
-#app {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 0 2rem;
 }
 
 a,
@@ -21,7 +14,7 @@ a,
   text-decoration: none;
   color: hsla(160, 100%, 37%, 1);
   transition: 0.4s;
-  padding: 3px;
+  /* padding: 3px; unosi logout */
 }
 
 @media (hover: hover) {
@@ -32,46 +25,57 @@ a,
 
 @media (min-width: 1024px) {
   body {
-    display: flex;
-    place-items: center;
+    /* display: flex;
+    place-items: center; */
   }
-} */
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  /* align-items: center; */
+  /* zweza okno */
+  /* padding: 0 2rem; nav nie idzie full*/
+}
+
 /* ADD TO DELETE BUTTON */
+
+.btn {
+  cursor: pointer;
+  background-color: #9c88ff;
+  /* box-shadow: var(--box-shadow); */
+  color: #fff;
+  border: 0;
+  display: inline-block;
+  margin: 10px 0 30px;
+  /* padding: 10px; */
+  width: 110px;
+  font-size: 1rem;
+  cursor: pointer;
+  line-height: 1.3rem;
+  padding: 2px 5px;
+}
+
+.btn:focus {
+  outline: 0;
+}
+
+.delete-btn {
+  background-color: #e74c3c;
+}
+.edit-btn {
+  background-color: rgba(0, 110, 255, 0.603);
+}
 /* 
-  .btn {
-    cursor: pointer;
-    background-color: #9c88ff;
-    box-shadow: var(--box-shadow);
-    color: #fff;
-    border: 0;
-    display: block;
-    font-size: 16px;
-    margin: 10px 0 30px;
-    padding: 10px;
-    width: 100%;
-  }
-  .btn:focus,
-  .delete-btn:focus {
-    outline: 0;
-  }
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translate(-100%, -50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
 
-  .delete-btn {
-    cursor: pointer;
-    background-color: #e74c3c;
-    border: 0;
-    color: #fff;
-    font-size: 20px;
-    line-height: 20px;
-    padding: 2px 5px;
-    position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translate(-100%, -50%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-
-  .list li:hover .delete-btn {
-    opacity: 1;
-  }
+.list li:hover .delete-btn {
+  opacity: 1;
 } */

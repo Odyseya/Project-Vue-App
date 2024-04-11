@@ -43,7 +43,7 @@ onMounted(() => {
     <template v-if="user">
       <label for="taskTitle"> Task title: </label>
       <input type="text" id="taskTitle" v-model="taskTitle" placeholder="new task" />
-      <button @click="_addTask(user)">Add a task</button>
+      <button @click="_addTask(user)" class="btn">Add a task</button>
     </template>
 
     <template v-if="tasks && tasks.length">
