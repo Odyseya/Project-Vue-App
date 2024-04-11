@@ -26,7 +26,6 @@ const signIn = async () => {
     router.push({ name: 'home' })
   } catch (error) {
     console.error(error)
-    errorMessage.value = 'Wrong data provided.' // Set the message on error
   }
 }
 
