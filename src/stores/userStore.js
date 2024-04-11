@@ -48,10 +48,27 @@ export const useUserStore = defineStore('user', () => {
     try {
       user.value = await logIn(email, password)
       errorMessage.value = '' // Clear the message on successful login
+      console.log('User info retrieved:', user.value)
     } catch (error) {
-      console.error(error)
-      errorMessage.value = 'Wrong password provided.' // Set the message on error
+      // {
+      //   console.error(error)
+      //   errorMessage.value = 'Wrong data provided.' // Set the message on error
+      // }
+      if (error.message === 'Email not confirmed') {
+        errorMessage.value =
+          'This email is not verified. Check your mailbox and try to login again.'
+        resetErrorMessageAfterDelay(2500) // 2500 milliseconds (3 seconds)
+      } else {
+        errorMessage.value = 'Wrong data provided. Please try again'
+        resetErrorMessageAfterDelay(2500) // 2500 milliseconds (3 seconds)
+      }
     }
+  }
+
+  function resetErrorMessageAfterDelay(delay) {
+    setTimeout(() => {
+      errorMessage.value = ''
+    }, delay)
   }
 
   async function signOut() {
