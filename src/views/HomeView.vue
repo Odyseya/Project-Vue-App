@@ -38,21 +38,30 @@ onMounted(() => {
 
 <template>
   <main>
-    <h1>Home View!</h1>
+    <h1>Home View! Your Tasks List</h1>
 
-    <h2>All Tasks: {{ tasks.length }}</h2>
+    <template v-if="user">
+      <label for="taskTitle"> Task title: </label>
+      <input type="text" id="taskTitle" v-model="taskTitle" placeholder="new task" />
+      <button @click="_addTask(user)">Add a task</button>
+    </template>
 
-    <!-- <span>Incompleted tasks: {{ incompletedTasks.length }}</span> -->
-    <label>
-      Task title:
-      <input type="text" v-model="taskTitle" placeholder="new task" />
-    </label>
+    <template v-if="tasks && tasks.length">
+      <h2>All Tasks: {{ tasks.length }}</h2>
+      <ul>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <TaskItem v-for="task in tasks" :key="task.id" :task="task"></TaskItem>
+          <!-- @remove="task.splice(index, 1)" -->
+        </div>
+      </ul>
+    </template>
 
-    <button @click="_addTask(user)">Add a task</button>
-    <ul>
-      <TaskItem v-for="task in tasks" :key="task.id" :task="task"></TaskItem>
-      <!-- @remove="task.splice(index, 1)" -->
-    </ul>
+    <template v-else>
+      <p v-if="!user">Loading...</p>
+      <p v-else-if="!tasks">Tasks are loading..</p>
+      <!-- If there are no tasks to display -->
+      <p v-else>There are no tasks</p>
+    </template>
   </main>
 </template>
 
