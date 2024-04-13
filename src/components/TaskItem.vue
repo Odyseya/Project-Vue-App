@@ -10,9 +10,10 @@ const props = defineProps({
   }
 })
 
-// Initialize a reactive reference to the task
+// reactive reference to the task
 const task = ref(props.task)
 
+// DELETE
 const _deleteTask = async () => {
   await tasksStore.deleteTask(props.task.id)
   tasksStore.fetchTasks()
@@ -35,10 +36,21 @@ const _editTask = async () => {
     editMode.value = true
   }
 }
+
+const toggleTaskCompletion = async () => {
+  if (task.value.is_complete) {
+    await tasksStore.markTaskAsCompleteById(task.value.id)
+  } else {
+    await tasksStore.markTaskAsIncompleteById(task.value.id)
+  }
+  // needed?
+  await tasksStore.fetchTasks()
+}
 </script>
 
 <template>
   <li>
+    <!-- EDIT TITLE  -->
     <div v-if="!editMode">
       {{ task.title }}
     </div>
@@ -49,11 +61,16 @@ const _editTask = async () => {
       class="border rounded px-2 py-1 w-full md:w-auto"
     />
 
-    <!-- <input type="checkbox" id="checkbox" v-model="checked" /> -->
-    <input type="checkbox" id="checkbox" v-model="task.is_complete" />
-    <label for="checkbox">Completed</label>
+    <!-- CHECKBOX TO TOGGLE TASK COMPLETION -->
+    <input
+      type="checkbox"
+      id="completionCheckbox"
+      v-model="task.is_complete"
+      @change="toggleTaskCompletion"
+    />
+    <label for="completionCheckbox"> Completed </label>
 
-    <!-- <button @click="_editTask" class="btn edit-btn">Edit</button> -->
+    <!-- EDIT & DELETE BUTTONS -->
     <button @click="_editTask" class="btn edit-btn">{{ editMode ? 'Save' : 'Edit' }}</button>
     <button @click="_deleteTask" class="btn delete-btn">Delete</button>
   </li>

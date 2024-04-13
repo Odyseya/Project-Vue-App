@@ -1,5 +1,5 @@
 import { supabase } from '@/api/supabase'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import {
   fetchAllTasks,
@@ -84,7 +84,6 @@ export const useTasksStore = defineStore('tasks', () => {
     try {
       const updatedTask = await updateTask(taskId, { title: newTitle })
       if (updatedTask) {
-        // Assuming `updateTask` returns the updated task object
         // Find and update the task in the local state
         const taskIndex = tasks.value.findIndex((task) => task.id === taskId)
         if (taskIndex !== -1) {
@@ -97,11 +96,23 @@ export const useTasksStore = defineStore('tasks', () => {
     }
   }
 
+  // Computed property for completed tasks
+  const completedTasks = computed(() => {
+    return tasks.value.filter((task) => task.is_complete)
+  })
+
+  // Computed property for uncompleted tasks
+  const uncompletedTasks = computed(() => {
+    return tasks.value.filter((task) => !task.is_complete)
+  })
+
   return {
     // State
     tasks,
+    completedTasks,
+    uncompletedTasks,
     // Getters
-    // incompletedTasks,
+
     // Actions
     fetchTasks,
     createNewTask,
