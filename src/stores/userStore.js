@@ -57,10 +57,10 @@ export const useUserStore = defineStore('user', () => {
       if (error.message === 'Email not confirmed') {
         errorMessage.value =
           'This email is not verified. Check your mailbox and try to login again.'
-        resetErrorMessageAfterDelay(2500) // 2500 milliseconds (3 seconds)
+        resetErrorMessageAfterDelay(2500) // 2500 milliseconds
       } else {
         errorMessage.value = 'Wrong data provided. Please try again'
-        resetErrorMessageAfterDelay(2500) // 2500 milliseconds (3 seconds)
+        resetErrorMessageAfterDelay(2500) // 2500 milliseconds
       }
     }
   }

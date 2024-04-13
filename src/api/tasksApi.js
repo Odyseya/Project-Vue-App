@@ -45,8 +45,6 @@ export const updateTask = async (taskId, updatedTask) => {
 export const deleteTaskById = async (id) => {
   //.eq expects the column name and the value to match.
   const { error } = await supabase.from(TABLE_NAME).delete().eq('id', id)
-  // .match({ id: id })
-
   if (error) {
     throw new Error(error.message)
   }

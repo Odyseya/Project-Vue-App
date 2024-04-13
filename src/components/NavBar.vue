@@ -1,5 +1,3 @@
-<!-- just example of navbar styled  , not applied anywhere -->
-
 <template>
   <header class="bg-at-light-green text-white">
     <!-- paddings -->

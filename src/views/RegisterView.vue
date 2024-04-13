@@ -4,22 +4,14 @@ import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/userStore'
 
 const router = useRouter()
-// const email = ref(null);
-// const password = ref(null);
-// const confirmPassword = ref(null)
-const errorMsg = ref(null)
-
 const userStore = useUserStore()
 
-// const user = ref('')
+const errorMsg = ref(null)
 const email = ref('')
 const password = ref('')
+// const confirmPassword = ref(null)
 
-// to bind user's input (user, pass) to register action of userStore ?
-// const register = () => {
-//   userStore.register(email.value, password.value)
-// }
-
+// bind user's input (user, pass) to register action of userStore
 const register = async () => {
   try {
     await userStore.register(email.value, password.value)

@@ -15,10 +15,15 @@ export const useTasksStore = defineStore('tasks', () => {
   const tasks = ref([])
 
   // Getters
-  // Getter for incompleted tasks
-  // const incompletedTasks = computed(() => {
-  //   return tasks.value.filter((task) => !task.isComplete)
-  // })
+  // Computed property for completed tasks
+  const completedTasks = computed(() => {
+    return tasks.value.filter((task) => task.is_complete)
+  })
+
+  // Computed property for uncompleted tasks
+  const uncompletedTasks = computed(() => {
+    return tasks.value.filter((task) => !task.is_complete)
+  })
 
   // Actions
   async function fetchTasks() {
@@ -95,16 +100,6 @@ export const useTasksStore = defineStore('tasks', () => {
       console.error(error)
     }
   }
-
-  // Computed property for completed tasks
-  const completedTasks = computed(() => {
-    return tasks.value.filter((task) => task.is_complete)
-  })
-
-  // Computed property for uncompleted tasks
-  const uncompletedTasks = computed(() => {
-    return tasks.value.filter((task) => !task.is_complete)
-  })
 
   return {
     // State

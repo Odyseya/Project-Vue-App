@@ -13,12 +13,7 @@ const router = useRouter()
 const email = ref('')
 const password = ref('')
 
-// to bind user's input (user, pass) to signIn action of userStore ?
-// const signIn = () => {
-// userStore.signIn(user.value, password.value)
-// userStore.signIn(email.value, password.value)
-// }
-
+// bind user's input (user, pass) to signIn action of userStore
 const signIn = async () => {
   try {
     await userStore.signIn(email.value, password.value)
@@ -42,7 +37,6 @@ const signIn = async () => {
 
       <div class="flex flex-col mb-2">
         <label for="email">User email: </label>
-        <!-- <input type="text" v-model="user" /> -->
         <input type="text" id="email" v-model="email" />
       </div>
 
