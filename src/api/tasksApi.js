@@ -16,8 +16,8 @@ export const fetchAllTasks = async () => {
 
 // CREATE TASK
 export const createTask = async (task) => {
-  const { error } = await supabase.from(TABLE_NAME).insert([task])
-
+  // const { error } = await supabase.from(TABLE_NAME).insert([task])
+  const { error } = await supabase.from(TABLE_NAME).insert(task)
   if (error) {
     throw new Error(error.message)
   }
@@ -25,15 +25,21 @@ export const createTask = async (task) => {
 }
 
 // UPDATE TASK
-export const updateTask = async (id, updatedTask) => {
-  const { error } = await supabase.from(TABLE_NAME).update(updatedTask).eq({ id: id })
-  //  .match({ id: id })
-
+export const updateTask = async (taskId, updatedTask) => {
+  const { error } = await supabase.from(TABLE_NAME).update(updatedTask).eq('id', taskId)
   if (error) {
     throw new Error(error.message)
   }
   return true
 }
+
+// export const updateTask = async (taskId, updatedTask) => {
+//   const { data, error } = await supabase.from(TABLE_NAME).update(updatedTask).eq('id', taskId)
+//   if (error) {
+//     throw new Error(error.message)
+//   }
+//   return data
+// }
 
 // DELETE TASK
 export const deleteTaskById = async (id) => {
@@ -54,7 +60,7 @@ export const deleteTaskById = async (id) => {
 // }
 
 export const markTaskAsComplete = async (id) => {
-  const { error } = await supabase.from('tasks').update({ isDone: true }).eq('id', id)
+  const { error } = await supabase.from('tasks').update({ is_complete: true }).eq('id', id)
 
   if (error) {
     throw new Error(error.message)
@@ -64,7 +70,7 @@ export const markTaskAsComplete = async (id) => {
 
 // MARK TASK AS INCOMPLETE
 export const markTaskAsIncomplete = async (id) => {
-  const { error } = await supabase.from('tasks').update({ isDone: false }).eq('id', id)
+  const { error } = await supabase.from('tasks').update({ is_complete: false }).eq('id', id)
 
   if (error) {
     throw new Error(error.message)

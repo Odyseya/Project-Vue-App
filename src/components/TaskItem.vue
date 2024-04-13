@@ -17,16 +17,44 @@ const _deleteTask = async () => {
   await tasksStore.deleteTask(props.task.id)
   tasksStore.fetchTasks()
 }
+
+// EDIT
+const editMode = ref(false)
+const newTitle = ref(task.value.title)
+
+const _editTask = async () => {
+  if (editMode.value) {
+    try {
+      await tasksStore.updateTaskTitle(task.value.id, newTitle.value)
+      task.value.title = newTitle.value
+      editMode.value = false
+    } catch (error) {
+      console.error(error)
+    }
+  } else {
+    editMode.value = true
+  }
+}
 </script>
 
 <template>
   <li>
-    {{ task.title }}
+    <div v-if="!editMode">
+      {{ task.title }}
+    </div>
+    <input
+      v-else
+      type="text"
+      v-model="newTitle"
+      class="border rounded px-2 py-1 w-full md:w-auto"
+    />
 
-    <input type="checkbox" id="checkbox" v-model="checked" />
+    <!-- <input type="checkbox" id="checkbox" v-model="checked" /> -->
+    <input type="checkbox" id="checkbox" v-model="task.is_complete" />
     <label for="checkbox">Completed</label>
 
-    <button @click="_editTask" class="btn edit-btn">Edit</button>
+    <!-- <button @click="_editTask" class="btn edit-btn">Edit</button> -->
+    <button @click="_editTask" class="btn edit-btn">{{ editMode ? 'Save' : 'Edit' }}</button>
     <button @click="_deleteTask" class="btn delete-btn">Delete</button>
   </li>
 </template>

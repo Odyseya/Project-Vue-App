@@ -43,16 +43,6 @@ export const useTasksStore = defineStore('tasks', () => {
     }
   }
 
-  async function updateExistingTaskById(id, updatedTask) {
-    try {
-      await updateTask(id, updatedTask)
-      // see if needed refetch tasks to update the state with the updated task
-      await fetchTasks()
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
   async function deleteTask(id) {
     try {
       await deleteTaskById(id)
@@ -81,6 +71,32 @@ export const useTasksStore = defineStore('tasks', () => {
     }
   }
 
+  // async function updateExistingTaskById(id, updatedTask) {
+  //   try {
+  //     await updateTask(id, updatedTask)
+  //     // see if needed refetch tasks to update the state with the updated task
+  //     await fetchTasks()
+  //   } catch (error) {
+  //     console.error(error)
+  //   }
+  // }
+  async function updateTaskTitle(taskId, newTitle) {
+    try {
+      const updatedTask = await updateTask(taskId, { title: newTitle })
+      if (updatedTask) {
+        // Assuming `updateTask` returns the updated task object
+        // Find and update the task in the local state
+        const taskIndex = tasks.value.findIndex((task) => task.id === taskId)
+        if (taskIndex !== -1) {
+          tasks.value[taskIndex].title = newTitle // after calling supa
+        }
+      }
+      return true
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   return {
     // State
     tasks,
@@ -89,9 +105,10 @@ export const useTasksStore = defineStore('tasks', () => {
     // Actions
     fetchTasks,
     createNewTask,
-    updateExistingTaskById,
+    // updateExistingTaskById,
     deleteTask,
     markTaskAsCompleteById,
-    markTaskAsIncompleteById
+    markTaskAsIncompleteById,
+    updateTaskTitle
   }
 })
