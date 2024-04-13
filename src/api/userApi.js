@@ -31,7 +31,7 @@ export const logIn = async (email, password) => {
   } = await supabase.auth.signInWithPassword({ email, password })
 
   if (error) {
-    alert(error)
+    // alert(error)
     throw new Error(error.message)
   }
 

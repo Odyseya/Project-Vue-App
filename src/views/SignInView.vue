@@ -12,6 +12,8 @@ const router = useRouter()
 // const user = ref('')
 const email = ref('')
 const password = ref('')
+// to display error messages from this component
+// const errorMsg = ref(null)
 
 // bind user's input (user, pass) to signIn action of userStore
 const signIn = async () => {
@@ -21,13 +23,15 @@ const signIn = async () => {
     router.push({ name: 'home' })
   } catch (error) {
     console.error(error)
+    // handle error "email not confirmed" from supabase
+    // and present it to user
+    // if (error.message === 'Email not confirmed') {
+    //   errorMsg.value = 'This email is not verified. Check your mailbox and try to login again.'
+    // } else {
+    //   errorMsg.value = 'Wrong data provided. Please try again'
+    // }
   }
 }
-
-// MOVE TO HOME SCREEN
-// handle error from supabase and present it to user
-// so that when their email is not confirmed
-// it states "email not confirmed " in the error.
 </script>
 
 <template>
@@ -56,10 +60,14 @@ const signIn = async () => {
       </p>
     </form>
 
-    <!-- Display the error message -->
+    <!-- Display the error message from store-->
     <div v-if="userStore.errorMessage" class="text-red-500">
       {{ userStore.errorMessage }}
     </div>
+    <!-- Display the error message from this component-->
+    <!-- <div v-if="errorMsg" class="text-red-500">
+      {{ errorMsg }}
+    </div> -->
   </main>
 </template>
 

@@ -38,6 +38,7 @@ export const useUserStore = defineStore('user', () => {
   async function register(email, password) {
     try {
       user.value = await createNewUser(email, password)
+      alert('Account created. We sent you an email. Please check your mailbox.')
     } catch (error) {
       console.error(error)
     }
@@ -55,13 +56,12 @@ export const useUserStore = defineStore('user', () => {
       //   errorMessage.value = 'Wrong data provided.' // Set the message on error
       // }
       if (error.message === 'Email not confirmed') {
-        errorMessage.value =
-          'This email is not verified. Check your mailbox and try to login again.'
-        resetErrorMessageAfterDelay(2500) // 2500 milliseconds
+        // errorMessage.value =
+        alert('This email is not verified. Check your mailbox and try to login again.')
       } else {
         errorMessage.value = 'Wrong data provided. Please try again'
-        resetErrorMessageAfterDelay(2500) // 2500 milliseconds
       }
+      resetErrorMessageAfterDelay(3500)
     }
   }
 
@@ -90,14 +90,14 @@ export const useUserStore = defineStore('user', () => {
   return {
     // State
     user,
+    errorMessage,
     // Getters
+
     // Actions
     fetchUser,
-    // signUp,
     register,
     signIn,
     signOut,
-    errorMessage,
     unsubscribeAuthListener
   }
 })
