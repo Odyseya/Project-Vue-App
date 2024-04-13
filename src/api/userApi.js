@@ -4,6 +4,7 @@ export const fetchActualUser = async () => {
   // Fetches the current user's session information
   const { data } = await supabase.auth.getSession()
   // If user authenticated, return user object; otherwise, return null
+  console.log(data.session)
   return data?.session?.user || null
 }
 
@@ -16,9 +17,10 @@ export const createNewUser = async (email, password) => {
   const { data, error } = await supabase.auth.signUp({ email, password })
 
   if (error) {
+    alert(error)
     throw new Error(error.message)
   }
-
+  console.log(data)
   return data
 }
 
@@ -29,6 +31,7 @@ export const logIn = async (email, password) => {
   } = await supabase.auth.signInWithPassword({ email, password })
 
   if (error) {
+    alert(error)
     throw new Error(error.message)
   }
 
@@ -47,6 +50,7 @@ export const logOut = async () => {
     throw error
     // Rethrow the error to be handled by the caller
   }
+  alert('Log out successful.')
 }
 
 // ADDING Auth event listener
