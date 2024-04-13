@@ -55,7 +55,8 @@ const displayedTasks = computed(filterTasks)
 </script>
 
 <template>
-  <main>
+  <!-- SHOW IF USER VERIFIED EMAIL -->
+  <main v-if="user && userStore.errorMessage !== 'Email not confirmed'">
     <h1>Home View! Your Tasks List</h1>
 
     <!-- ADD TASK FIELD AND BUTTON -->
@@ -71,7 +72,7 @@ const displayedTasks = computed(filterTasks)
     </template>
 
     <template v-else>
-      <p v-if="!user">Processing...</p>
+      <p v-if="!user">Processing.....</p>
       <p v-else-if="!tasks">Retrieving tasks..</p>
       <p v-else>There are no tasks</p>
     </template>
@@ -88,6 +89,12 @@ const displayedTasks = computed(filterTasks)
       <TaskItem v-for="task in displayedTasks" :key="task.id" :task="task"></TaskItem>
     </ul>
   </main>
+  <!-- SHOW IF USER DIDNT VERIFY EMAIL -->
+  <div v-else>
+    <p>
+      {{ userStore.errorMessage || 'Next Step: Confirm your email address to access.' }}
+    </p>
+  </div>
 </template>
 
 <style scoped></style>
