@@ -15,6 +15,7 @@ export const useTasksStore = defineStore('tasks', () => {
   const tasks = ref([])
 
   // Getters
+
   // Computed property for completed tasks
   const completedTasks = computed(() => {
     return tasks.value.filter((task) => task.is_complete)
@@ -32,11 +33,22 @@ export const useTasksStore = defineStore('tasks', () => {
       // update the state
       const fetchedTasks = await fetchAllTasks()
       console.log('Fetched tasks:', fetchedTasks)
-      tasks.value = fetchedTasks
-      // tasks.value = fetchAllTasks()
+
+      // tasks.value = fetchedTasks
+
+      // Sort tasks using the new function
+      const sortedTasks = sortTasks(fetchedTasks)
+
+      // Update the state with the sorted tasks
+      tasks.value = sortedTasks
     } catch (error) {
       console.error(error)
     }
+  }
+
+  function sortTasks(tasks) {
+    // Sort tasks by ID (or any other consistent attribute)
+    return tasks.sort((a, b) => a.id - b.id)
   }
 
   async function createNewTask(task) {

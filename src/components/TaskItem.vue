@@ -62,13 +62,15 @@ const toggleTaskCompletion = async () => {
     />
 
     <!-- CHECKBOX TO TOGGLE TASK COMPLETION -->
+    <!-- Unique ID for each checkbox to prevent toggling the first checkbo clicking on any "completed" label-->
     <input
       type="checkbox"
       id="completionCheckbox"
+      :id="`completionCheckbox-${task.id}`"
       v-model="task.is_complete"
       @change="toggleTaskCompletion"
     />
-    <label for="completionCheckbox"> Completed </label>
+    <label :for="`completionCheckbox-${task.id}`"> Completed </label>
 
     <!-- EDIT & DELETE BUTTONS -->
     <button @click="_editTask" class="btn edit-btn">{{ editMode ? 'Save' : 'Edit' }}</button>
