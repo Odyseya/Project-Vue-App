@@ -41,17 +41,15 @@ const signIn = async () => {
       <h1 class="text-3xl text-at-light-green mb-4">Login to your Account</h1>
 
       <div class="flex flex-col mb-2">
-        <label>
-          User email:
-          <!-- <input type="text" v-model="user" /> -->
-          <input type="text" v-model="email" />
-        </label>
+        <label for="email">User email: </label>
+        <!-- <input type="text" v-model="user" /> -->
+        <input type="text" id="email" v-model="email" />
       </div>
 
-      <label>
-        Password:
-        <input type="password" v-model="password" />
-      </label>
+      <div class="flex flex-col mb-2">
+        <label for="password">Password:</label>
+        <input type="password" id="password" v-model="password" />
+      </div>
 
       <button
         type="submit"
@@ -59,10 +57,9 @@ const signIn = async () => {
       >
         Login using signIn funcion
       </button>
-
-      <RouterLink class="text-sm mt-6 text-center" to="/register">
-        Don't have an account? <span class="text-at-light-green">Register</span>
-      </RouterLink>
+      <p class="text-sm mt-6 text-center">
+        <RouterLink to="/register"> Don't have an account? Register </RouterLink>
+      </p>
     </form>
 
     <!-- Display the error message -->
