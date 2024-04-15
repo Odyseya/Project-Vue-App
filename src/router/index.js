@@ -32,15 +32,10 @@ const router = createRouter({
       component: () => import('@/views/RegisterView.vue')
     },
     {
-      path: '/tasks/list',
-      name: 'list',
-      component: () => import('@/views/TaskListView.vue')
-    },
-    {
       path: '/:pathMatch(.*)*',
       name: 'not-found',
       component: () => import('@/views/NotFoundView.vue')
-     }
+    }
   ]
 })
 
