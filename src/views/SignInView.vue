@@ -40,23 +40,37 @@ const signIn = async () => {
       <h1 class="text-3xl text-at-light-green mb-4">Login to your Account</h1>
 
       <div class="flex flex-col mb-2">
-        <label for="email">User email: </label>
-        <input type="text" id="email" v-model="email" />
+        <label for="email" class="mb-1 text-sm text-at-light-green">User email: </label>
+        <input
+          type="text"
+          required
+          id="email"
+          v-model="email"
+          class="p-2 text-gray-500 focus:outline-none"
+        />
       </div>
 
       <div class="flex flex-col mb-2">
-        <label for="password">Password:</label>
-        <input type="password" id="password" v-model="password" />
+        <label for="password" class="mb-1 text-sm text-at-light-green">Password:</label>
+        <input
+          type="password"
+          required
+          id="password"
+          v-model="password"
+          class="p-2 text-gray-500 focus:outline-none"
+        />
       </div>
 
       <button
         type="submit"
-        class="mt-6 py-2 px-6 rounded-sm self-start text-sm text-white bg-at-light-green duration-200 border-solid border-2 border-transparent hover:border-white hover:bg-white hover:text-at-light-green"
+        class="mt-6 py-2 px-6 rounded-sm self-start text-sm text-white bg-at-light-green duration-200 border-solid border-2 border-transparent hover:border-at-light-green hover:bg-white hover:text-at-light-green"
       >
-        Login using signIn funcion
+        Login
       </button>
       <p class="text-sm mt-6 text-center">
-        <RouterLink to="/register"> Don't have an account? Register </RouterLink>
+        <RouterLink class="text-sm mt-6 text-center text-at-light-green" to="/register">
+          Don't have an account? <span class="text-at-light-green">Register</span>
+        </RouterLink>
       </p>
     </form>
 
