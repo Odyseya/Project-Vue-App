@@ -1,4 +1,3 @@
-import { supabase } from '@/api/supabase'
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import {
@@ -6,8 +5,7 @@ import {
   createTask,
   updateTask,
   deleteTaskById,
-  markTaskAsComplete,
-  markTaskAsIncomplete
+  updateTaskStatus
 } from '@/api/tasksApi'
 
 export const useTasksStore = defineStore('tasks', () => {
@@ -28,12 +26,10 @@ export const useTasksStore = defineStore('tasks', () => {
 
   // Actions
   async function fetchTasks() {
-    //call to the API
     try {
       // update the state
       const fetchedTasks = await fetchAllTasks()
       console.log('Fetched tasks:', fetchedTasks)
-
       // tasks.value = fetchedTasks
 
       // Sort tasks using the new function
@@ -47,14 +43,14 @@ export const useTasksStore = defineStore('tasks', () => {
   }
 
   function sortTasks(tasks) {
-    // Sort tasks by ID (or any other consistent attribute)
+    // Sort tasks by ID
     return tasks.sort((a, b) => a.id - b.id)
   }
 
   async function createNewTask(task) {
     try {
-      //call API
-      await createTask(task)
+      const createdTask = await createTask(task)
+      tasks.value.unshift(createdTask)
     } catch (error) {
       console.error(error)
     }
@@ -63,17 +59,26 @@ export const useTasksStore = defineStore('tasks', () => {
   async function deleteTask(id) {
     try {
       await deleteTaskById(id)
-      // see if needed refetch tasks to update the state with the updated task
-      await fetchTasks()
+      // Directly update the state by filtering out the deleted task
+      tasks.value = tasks.value.filter((t) => t.id !== id)
     } catch (error) {
       console.error(error)
     }
   }
 
+  /**
+   * @todo - Intenatar agrupar este método markTaskAsCompleteById y
+   * el método markTaskAsIncompleteById, de forma de que hay un
+   * único método.
+   */
   async function markTaskAsCompleteById(id) {
     try {
-      await markTaskAsComplete(id)
-      // see if needed refetch tasks to update the state with the updated task
+      const updatedTask = await updateTaskStatus(id, true)
+
+      const taskIndex = tasks.value.findIndex((t) => t.id === id)
+      if (taskIndex !== -1) {
+        tasks.value[taskIndex] = updatedTask
+      }
     } catch (error) {
       console.error(error)
     }
@@ -81,30 +86,28 @@ export const useTasksStore = defineStore('tasks', () => {
 
   async function markTaskAsIncompleteById(id) {
     try {
-      await markTaskAsIncomplete(id)
-      // see if needed refetch tasks to update the state with the updated task
+      const updatedTask = await updateTaskStatus(id, false)
+
+      const taskIndex = tasks.value.findIndex((t) => t.id === id)
+      if (taskIndex !== -1) {
+        tasks.value[taskIndex] = updatedTask
+      }
     } catch (error) {
       console.error(error)
     }
   }
 
-  // async function updateExistingTaskById(id, updatedTask) {
-  //   try {
-  //     await updateTask(id, updatedTask)
-  //     // see if needed refetch tasks to update the state with the updated task
-  //     await fetchTasks()
-  //   } catch (error) {
-  //     console.error(error)
-  //   }
-  // }
   async function updateTaskTitle(taskId, newTitle) {
     try {
+      // update the task remotely supa
       const updatedTask = await updateTask(taskId, { title: newTitle })
       if (updatedTask) {
-        // Find and update the task in the local state
+        //Find the index of the task in the local tasks array
         const taskIndex = tasks.value.findIndex((task) => task.id === taskId)
+        //  Check if the task exists locally
         if (taskIndex !== -1) {
-          tasks.value[taskIndex].title = newTitle // after calling supa
+          // Update the title of the task locally with the new title
+          tasks.value[taskIndex] = updatedTask
         }
       }
       return true
@@ -123,7 +126,6 @@ export const useTasksStore = defineStore('tasks', () => {
     // Actions
     fetchTasks,
     createNewTask,
-    // updateExistingTaskById,
     deleteTask,
     markTaskAsCompleteById,
     markTaskAsIncompleteById,

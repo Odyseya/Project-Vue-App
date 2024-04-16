@@ -7,7 +7,7 @@ import { onMounted, ref, computed } from 'vue'
 
 const userStore = useUserStore()
 const tasksStore = useTasksStore()
-const { tasks } = storeToRefs(tasksStore)
+const { tasks, completedTasks, uncompletedTasks } = storeToRefs(tasksStore)
 const { user } = storeToRefs(userStore)
 
 const taskTitle = ref('')
@@ -22,7 +22,6 @@ const _addTask = async (user) => {
 
   // awaits task to be added then does fetch
   await tasksStore.createNewTask(task)
-  tasksStore.fetchTasks()
   // clean the field once task added
   taskTitle.value = ''
 }
@@ -31,7 +30,6 @@ const _addTask = async (user) => {
 onMounted(async () => {
   console.log('Tasks state before fetchTasks:', tasks.value)
   await tasksStore.fetchTasks()
-  await userStore.fetchUser()
   console.log('Tasks state after fetchTasks:', tasks.value)
 })
 
@@ -39,19 +37,17 @@ onMounted(async () => {
 // Reactive reference to the current filter
 const filter = ref('all')
 
-// Function to filter tasks based on the selected filter
-const filterTasks = () => {
+// to choose what to display based on the filter
+const displayedTasks = computed(() => {
   switch (filter.value) {
     case 'completed':
-      return tasksStore.completedTasks
+      return completedTasks.value
     case 'uncompleted':
-      return tasksStore.uncompletedTasks
+      return uncompletedTasks.value
     default:
-      return tasksStore.tasks
+      return tasks.value
   }
-}
-// to choose what to display based on the filter
-const displayedTasks = computed(filterTasks)
+})
 </script>
 
 <template>
@@ -78,7 +74,7 @@ const displayedTasks = computed(filterTasks)
     </template>
 
     <!-- Dropdown for task filtering -->
-    <select v-model="filter" @change="filterTasks">
+    <select class="text-black" v-model="filter">
       <option value="all">All Tasks:</option>
       <option value="completed">Completed Tasks</option>
       <option value="uncompleted">Uncompleted Tasks</option>
