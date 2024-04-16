@@ -1,5 +1,9 @@
 @import './base.css';
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* to chk later */
 
 #app {
@@ -7,14 +11,9 @@
   margin: 0 auto;
   /* padding: 2rem; */
   font-weight: normal;
-}
 
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  /* padding: 3px; unosi logout */
+  background-color: var(--vt-c-blue-dark);
+  color: #ffffff;
 }
 
 @media (hover: hover) {
@@ -43,7 +42,7 @@ a,
 
 .btn {
   cursor: pointer;
-  background-color: #9c88ff;
+  /* background-color: #9c88ff; */
   /* box-shadow: var(--box-shadow); */
   color: #fff;
   border: 0;
@@ -55,10 +54,18 @@ a,
   cursor: pointer;
   line-height: 1.3rem;
   padding: 2px 5px;
+
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  background-color: var(--vt-c-blue);
 }
 
 .btn:focus {
   outline: 0;
+}
+
+.btn:hover {
+  background-color: var(--vt-c-blue-light);
 }
 
 .delete-btn {
@@ -67,6 +74,7 @@ a,
 .edit-btn {
   background-color: rgba(0, 110, 255, 0.603);
 }
+
 /* 
   position: absolute;
   top: 50%;
