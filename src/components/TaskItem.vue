@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, ref } from 'vue'
+import { defineProps, ref, onMounted } from 'vue'
 import { useTasksStore } from '@/stores/tasksStore'
 
 const tasksStore = useTasksStore()
@@ -10,9 +10,6 @@ const props = defineProps({
   }
 })
 
-// reactive reference to the task
-const task = ref(props.task)
-
 // DELETE
 const _deleteTask = async () => {
   await tasksStore.deleteTask(props.task.id)
@@ -21,13 +18,12 @@ const _deleteTask = async () => {
 
 // EDIT
 const editMode = ref(false)
-const newTitle = ref(task.value.title)
+const newTitle = ref(props.task.title)
 
 const _editTask = async () => {
   if (editMode.value) {
     try {
-      await tasksStore.updateTaskTitle(task.value.id, newTitle.value)
-      task.value.title = newTitle.value
+      await tasksStore.updateTaskTitle(props.task.id, newTitle.value)
       editMode.value = false
     } catch (error) {
       console.error(error)
@@ -38,10 +34,10 @@ const _editTask = async () => {
 }
 
 const toggleTaskCompletion = async () => {
-  if (task.value.is_complete) {
-    await tasksStore.markTaskAsCompleteById(task.value.id)
+  if (props.task.is_complete) {
+    await tasksStore.markTaskAsCompleteById(props.task.id)
   } else {
-    await tasksStore.markTaskAsIncompleteById(task.value.id)
+    await tasksStore.markTaskAsIncompleteById(props.task.id)
   }
   // needed?
   await tasksStore.fetchTasks()
@@ -49,7 +45,7 @@ const toggleTaskCompletion = async () => {
 </script>
 
 <template>
-  <li>
+  <li class="bg-[#3490dc52]">
     <!-- EDIT TITLE  -->
     <div v-if="!editMode">
       {{ task.title }}
@@ -77,3 +73,20 @@ const toggleTaskCompletion = async () => {
     <button @click="_deleteTask" class="btn delete-btn">Delete</button>
   </li>
 </template>
+
+<style scoped>
+li {
+  border-radius: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+input[type='checkbox'] {
+  margin-right: 10px;
+}
+
+.btn {
+  margin-left: 5px;
+}
+</style>
