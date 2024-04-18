@@ -51,45 +51,75 @@ const displayedTasks = computed(() => {
 </script>
 
 <template>
-  <!-- SHOW IF USER VERIFIED EMAIL -->
-  <main v-if="user && userStore.errorMessage !== 'Email not confirmed'">
-    <h1>Home View! Your Tasks List</h1>
+  <div class="max-w-screen-md mx-auto px-4 py-10">
+    <!-- SHOW IF USER VERIFIED EMAIL -->
+    <main v-if="user && userStore.errorMessage !== 'Email not confirmed'">
+      <h1 class="text-2xl text-white">Home View! Your Tasks List</h1>
 
-    <!-- ADD TASK FIELD AND BUTTON -->
-    <template v-if="user">
-      <label for="taskTitle"> Task title: </label>
-      <input type="text" id="taskTitle" v-model="taskTitle" placeholder="new task" />
-      <button @click="_addTask(user)" class="btn">Add a task</button>
-    </template>
+      <!-- ADD TASK FIELD AND BUTTON -->
+      <div class="mt-2 mb-2 p-5 flex items-start bg-[#3490dc52] rounded-md shadow-lg">
+        <template v-if="user">
+          <div class="flex flex-col gap-y-3 w-full">
+            <label for="taskTitle" class="mb-1 text-sm text-white"> Task Title: </label>
+            <input
+              type="text"
+              id="taskTitle"
+              v-model="taskTitle"
+              placeholder=" new task"
+              class="p-2 text-gray-500 focus:outline-none focus:ring-2 focus:ring-at-light-green border border-gray-300 rounded-md"
+            />
+            <button
+              @click="_addTask(user)"
+              class="btn self-start text-sm bg-at-light-green duration-200 hover:border-at-light-green hover:bg-white hover:text-at-light-green"
+            >
+              Add a task
+            </button>
+          </div>
+        </template>
+      </div>
+      <!-- TASK COUNTER -->
 
-    <!-- TASK COUNTER -->
-    <template v-if="tasks && tasks.length">
-      <h2>Total number of tasks: {{ tasks.length }}</h2>
-    </template>
+      <template v-if="tasks && tasks.length">
+        <div class="flex flex-col">
+          <h2 class="text-sm text-white">Total number of tasks: {{ tasks.length }}</h2>
+        </div>
+      </template>
 
-    <template v-else>
-      <p v-if="!user">Processing.....</p>
-      <p v-else-if="!tasks">Retrieving tasks..</p>
-      <p v-else>There are no tasks</p>
-    </template>
+      <template v-else>
+        <p v-if="!user">Processing.....</p>
+        <p v-else-if="!tasks">Retrieving tasks..</p>
+        <p v-else>There are no tasks</p>
+      </template>
 
-    <!-- Dropdown for task filtering -->
-    <select class="text-black" v-model="filter">
-      <option value="all">All Tasks:</option>
-      <option value="completed">Completed Tasks</option>
-      <option value="uncompleted">Uncompleted Tasks</option>
-    </select>
-
-    <!-- TASKS LIST DISPLAY VIEW -->
-    <ul>
-      <TaskItem v-for="task in displayedTasks" :key="task.id" :task="task"></TaskItem>
-    </ul>
-  </main>
-  <!-- SHOW IF USER DIDNT VERIFY EMAIL -->
-  <div v-else>
-    <p>
-      {{ userStore.errorMessage || 'Next Step: Confirm your email address to access.' }}
-    </p>
+      <!-- Dropdown for task filtering -->
+      <div class="flex flex-col mt-2">
+        <!-- <label for="filter-by" class="mb-1 text-sm text-at-light-green">Filter by</label> -->
+        <select
+          id="filter-by"
+          v-model="filter"
+          class="p-2 text-gray-500 rounded-md focus:outline-none"
+        >
+          <option value="all">All Tasks:</option>
+          <option value="completed">Completed Tasks</option>
+          <option value="uncompleted">Uncompleted Tasks</option>
+        </select>
+      </div>
+      <!-- TASKS LIST DISPLAY VIEW -->
+      <ul>
+        <TaskItem
+          v-for="task in displayedTasks"
+          :key="task.id"
+          :task="task"
+          class="flex gap-x-4 gap-y-2 md:flex-row"
+        ></TaskItem>
+      </ul>
+    </main>
+    <!-- SHOW IF USER DIDNT VERIFY EMAIL -->
+    <div v-else class="mb-10 p-4 bg-light-grey rounded-md shadow-lg">
+      <p class="text-at-light-green">
+        {{ userStore.errorMessage || 'Next Step: Confirm your email address to access.' }}
+      </p>
+    </div>
   </div>
 </template>
 
