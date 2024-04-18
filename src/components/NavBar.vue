@@ -1,6 +1,5 @@
 <template>
-  <header class="bg-at-light-green text-white">
-    <!-- paddings -->
+  <header class="bg-[#3490dc52]">
     <nav class="container py-5 px-4 flex flex-col gap-4 items-center sm:flex-row">
       <div class="flex items-center gap-x-4">
         <img class="w-14" src="../assets/logo.svg" alt="Vue logo" />
@@ -13,7 +12,7 @@
         <RouterLink class="cursor-pointer" :to="{ name: 'about' }">About</RouterLink>
         <!-- if logged show logout, otherwise login -->
         <RouterLink v-if="!user" class="cursor-pointer" to="/signin">Login</RouterLink>
-        <li v-if="user" @click="logout" class="cursor-pointer">Logout</li>
+        <li v-if="user" @click="logout" class="cursor-pointer logout">Logout</li>
       </ul>
     </nav>
   </header>
