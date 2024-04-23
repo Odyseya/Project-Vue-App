@@ -16,20 +16,39 @@ const password = ref('')
 // const errorMsg = ref(null)
 
 // bind user's input (user, pass) to signIn action of userStore
+// redirects even if email not confirmed
+// const signIn = async () => {
+//   try {
+//     await userStore.signIn(email.value, password.value)
+//     password.value = ''
+//     router.push({ name: 'home' })
+//   } catch (error) {
+//     console.error(error)
+
+//     // handle error "email not confirmed" from supabase
+//     // and present it to user
+//     // if (error.message === 'Email not confirmed') {
+//     //   errorMsg.value = 'This email is not verified. Check your mailbox and try to login again.'
+//     // } else {
+//     //   errorMsg.value = 'Wrong data provided. Please try again'
+//     // }
+//   }
+// }
+
 const signIn = async () => {
   try {
-    await userStore.signIn(email.value, password.value)
+    const loginSuccess = await userStore.signIn(email.value, password.value)
     password.value = ''
-    router.push({ name: 'home' })
+
+    if (loginSuccess) {
+      router.push({ name: 'home' })
+    } else {
+      // The login attempt failed, possibly due to email not being confirmed.
+      // Do not redirect to the homepage.
+      console.log('Login failed. Verify email confirmation status.')
+    }
   } catch (error) {
     console.error(error)
-    // handle error "email not confirmed" from supabase
-    // and present it to user
-    // if (error.message === 'Email not confirmed') {
-    //   errorMsg.value = 'This email is not verified. Check your mailbox and try to login again.'
-    // } else {
-    //   errorMsg.value = 'Wrong data provided. Please try again'
-    // }
   }
 }
 </script>

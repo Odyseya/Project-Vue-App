@@ -12,9 +12,9 @@ import Toast from 'vue-toastification'
 import 'vue-toastification/dist/index.css'
 
 const app = createApp(App)
+// vue-toastification
 app.use(Toast)
 app.use(createPinia())
 app.use(router)
-// vue-toastification
 
 app.mount('#app')

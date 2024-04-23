@@ -25,7 +25,7 @@ const confirmPassword = ref('')
 // to test
 const register = async () => {
   if (password.value !== confirmPassword.value) {
-    alert('Passwords do not match. Please try again.')
+    errorMsg.value = 'Passwords do not match. Please try again.'
     return
   }
   try {
@@ -40,11 +40,6 @@ const register = async () => {
 
 <template>
   <div class="max-w-screen-sm mx-auto px-4 py-10">
-    <!-- Error Handling -->
-    <div v-if="errorMsg" class="mb-10 p-4 rounded-md bg-light-grey shadow-lg">
-      <p class="text-red-500">{{ errorMsg }}</p>
-    </div>
-
     <!-- Register -->
     <form @submit.prevent="register" class="p-8 flex flex-col bg-light-grey rounded-md shadow-lg">
       <h1 class="text-3xl text-at-light-green mb-4">Register</h1>
@@ -84,6 +79,15 @@ const register = async () => {
           v-model="confirmPassword"
         />
       </div>
+      <!-- Display the error message from this component -->
+      <div v-if="errorMsg" class="mb-8 p-2 rounded-md bg-light-grey shadow-lg">
+        <p class="text-red-500">{{ errorMsg }}</p>
+      </div>
+
+      <!-- Display the error message from store-->
+      <div v-if="userStore.errorMessage" class="text-red-500">
+        {{ userStore.errorMessage }}
+      </div>
 
       <button
         type="submit"
@@ -91,6 +95,7 @@ const register = async () => {
       >
         Register
       </button>
+
       <RouterLink class="text-sm mt-6 text-center" to="/signin">
         <span class="text-at-light-green"> Already have an account? Login</span>
       </RouterLink>

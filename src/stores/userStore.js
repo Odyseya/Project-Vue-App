@@ -43,23 +43,44 @@ export const useUserStore = defineStore('user', () => {
   async function register(email, password) {
     try {
       user.value = await createNewUser(email, password)
-      alert('Account created. We sent you an email. Please check your mailbox.')
+      toast.success('Account created. We sent you an email. Please check your mailbox.')
     } catch (error) {
       console.error(error)
 
       if (error.message === 'Password should be at least 6 characters') {
-        // errorMessage.value =
-        toast.error('Password should be at least 6 characters')
+        errorMessage.value = 'Password should be at least 6 characters'
       }
     }
   }
   // Error: Password should be at least 6 characters.
+
+  // async function signIn(email, password) {
+  //   try {
+  //     user.value = await logIn(email, password)
+  //     errorMessage.value = '' // Clear the message on successful login
+  //     console.log('User info retrieved:', user.value)
+  //   } catch (error) {
+  //     // {
+  //     console.error(error)
+  //     //   errorMessage.value = 'Wrong data provided.' // Set the message on error
+  //     // }
+  //     if (error.message === 'Email not confirmed') {
+  //       // errorMessage.value =
+  //       toast.warning('This email is not verified. Check your mailbox and try to login again.')
+  //     } else {
+  //       errorMessage.value = 'Invalid login credentials or account does not exist. Please try again'
+  //     }
+  //     resetErrorMessageAfterDelay(3500)
+  //   }
+  // }
 
   async function signIn(email, password) {
     try {
       user.value = await logIn(email, password)
       errorMessage.value = '' // Clear the message on successful login
       console.log('User info retrieved:', user.value)
+      // Assuming logIn function throws an error if email is not confirmed
+      return true // Return true to indicate successful login
     } catch (error) {
       // {
       console.error(error)
@@ -67,11 +88,13 @@ export const useUserStore = defineStore('user', () => {
       // }
       if (error.message === 'Email not confirmed') {
         // errorMessage.value =
-        alert('This email is not verified. Check your mailbox and try to login again.')
+        toast.warning('This email is not verified. Check your mailbox and try to login again.')
+        return false // Return false to indicate login failed due to email not being confirmed
       } else {
         errorMessage.value = 'Invalid login credentials or account does not exist. Please try again'
       }
       resetErrorMessageAfterDelay(3500)
+      return false // Return false for other errors as well
     }
   }
 
@@ -88,7 +111,8 @@ export const useUserStore = defineStore('user', () => {
     } catch (error) {
       console.error('Failed to log out:', error.message)
     }
-    toast.info('Log out successful.')
+
+    toast('Log out successful.')
   }
 
   function unsubscribeAuthListener() {
