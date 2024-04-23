@@ -35,12 +35,18 @@ export const useUserStore = defineStore('user', () => {
     }
   }
 
+  // test
   async function register(email, password) {
     try {
       user.value = await createNewUser(email, password)
       alert('Account created. We sent you an email. Please check your mailbox.')
     } catch (error) {
       console.error(error)
+
+      if (error.message === 'Password should be at least 6 characters') {
+        // errorMessage.value =
+        alert('Password should be at least 6 characters')
+      }
     }
   }
   // Error: Password should be at least 6 characters.
@@ -52,14 +58,14 @@ export const useUserStore = defineStore('user', () => {
       console.log('User info retrieved:', user.value)
     } catch (error) {
       // {
-      //   console.error(error)
+      console.error(error)
       //   errorMessage.value = 'Wrong data provided.' // Set the message on error
       // }
       if (error.message === 'Email not confirmed') {
         // errorMessage.value =
         alert('This email is not verified. Check your mailbox and try to login again.')
       } else {
-        errorMessage.value = 'Wrong data provided. Please try again'
+        errorMessage.value = 'Invalid login credentials or account does not exist. Please try again'
       }
       resetErrorMessageAfterDelay(3500)
     }
