@@ -50,7 +50,6 @@ export const logOut = async () => {
     throw error
     // Rethrow the error to be handled by the caller
   }
-  alert('Log out successful.')
 }
 
 // ADDING Auth event listener

@@ -84,6 +84,7 @@ export const useUserStore = defineStore('user', () => {
     } catch (error) {
       console.error('Failed to log out:', error.message)
     }
+    alert('Log out successful.')
   }
 
   function unsubscribeAuthListener() {
