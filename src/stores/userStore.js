@@ -4,12 +4,16 @@ import { fetchActualUser, createNewUser, logIn, logOut } from '@/api/userApi'
 import { setupAuthListener } from '@/api/userApi'
 // import { useRouter } from 'vue-router'
 
+import { useToast } from 'vue-toastification'
+
 export const useUserStore = defineStore('user', () => {
   // State
   const user = ref(undefined)
 
   const errorMessage = ref('')
   let authListener = null
+
+  const toast = useToast()
 
   // Setup auth listener when the store is initialized
   setupAuthListener({ user }).then((listener) => {
@@ -45,7 +49,7 @@ export const useUserStore = defineStore('user', () => {
 
       if (error.message === 'Password should be at least 6 characters') {
         // errorMessage.value =
-        alert('Password should be at least 6 characters')
+        toast.error('Password should be at least 6 characters')
       }
     }
   }
@@ -84,7 +88,7 @@ export const useUserStore = defineStore('user', () => {
     } catch (error) {
       console.error('Failed to log out:', error.message)
     }
-    alert('Log out successful.')
+    toast.info('Log out successful.')
   }
 
   function unsubscribeAuthListener() {
