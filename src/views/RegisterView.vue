@@ -9,15 +9,31 @@ const userStore = useUserStore()
 const errorMsg = ref(null)
 const email = ref('')
 const password = ref('')
-// const confirmPassword = ref(null)
+
+const confirmPassword = ref('')
 
 // bind user's input (user, pass) to register action of userStore
+// const register = async () => {
+//   try {
+//     await userStore.register(email.value, password.value)
+//     router.push({ name: 'home' })
+//   } catch (error) {
+//     console.error(error)
+//   }
+// }
+
+// to test
 const register = async () => {
+  if (password.value !== confirmPassword.value) {
+    alert('Passwords do not match. Please try again.')
+    return
+  }
   try {
     await userStore.register(email.value, password.value)
-    router.push({ name: 'home' })
+    router.push({ name: 'signin' })
   } catch (error) {
     console.error(error)
+    errorMsg.value = 'Registration failed. Please try again.'
   }
 }
 </script>
@@ -52,6 +68,20 @@ const register = async () => {
           class="p-2 text-gray-500 focus:outline-none"
           id="password"
           v-model="password"
+        />
+      </div>
+
+      <!-- Confirm Password Field -->
+      <div class="flex flex-col mb-2">
+        <label for="confirmPassword" class="mb-1 text-sm text-at-light-green"
+          >Confirm Password</label
+        >
+        <input
+          type="password"
+          required
+          class="p-2 text-gray-500 focus:outline-none"
+          id="confirmPassword"
+          v-model="confirmPassword"
         />
       </div>
 
