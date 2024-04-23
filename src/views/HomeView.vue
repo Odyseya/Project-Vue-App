@@ -54,7 +54,7 @@ const displayedTasks = computed(() => {
   <div class="max-w-screen-md mx-auto px-4 py-10">
     <!-- SHOW IF USER VERIFIED EMAIL -->
     <main v-if="user && userStore.errorMessage !== 'Email not confirmed'">
-      <h1 class="text-2xl text-white">Home View! Your Tasks List</h1>
+      <h1 class="text-2xl text-white">Your Tasks List</h1>
 
       <!-- ADD TASK FIELD AND BUTTON -->
       <div class="mt-2 mb-2 p-5 flex items-start bg-[#3490dc52] rounded-md shadow-lg">

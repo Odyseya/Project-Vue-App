@@ -68,7 +68,7 @@ const toggleTaskCompletion = async () => {
         v-model="task.is_complete"
         @change="toggleTaskCompletion"
       />
-      <label :for="`completionCheckbox-${task.id}`"> Completed </label>
+      <label class="text-sm" :for="`completionCheckbox-${task.id}`"> Completed </label>
 
       <!-- EDIT & DELETE BUTTONS -->
       <button @click="_editTask" class="btn edit-btn">{{ editMode ? 'Save' : 'Edit' }}</button>
@@ -81,6 +81,7 @@ const toggleTaskCompletion = async () => {
 input[type='checkbox'] {
   margin-right: 5px;
 }
+
 li {
   border-radius: 10px;
   margin-top: 10px;

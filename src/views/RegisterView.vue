@@ -62,7 +62,7 @@ const register = async () => {
         Register
       </button>
       <RouterLink class="text-sm mt-6 text-center" to="/signin">
-        Already have an account? <span class="text-at-light-green">Login</span>
+        <span class="text-at-light-green"> Already have an account? Login</span>
       </RouterLink>
     </form>
   </div>
