@@ -47,8 +47,14 @@ export const useUserStore = defineStore('user', () => {
     } catch (error) {
       console.error(error)
 
-      if (error.message === 'Password should be at least 6 characters') {
-        errorMessage.value = 'Password should be at least 6 characters'
+      // if (error.message === 'Password should be at least 6 characters.') {
+      //   // errorMessage.value = 'Password should be at least 6 characters'
+      //   toast.warning('Password should be at least 6 characters')
+      // }
+
+      if (error.message) {
+        // errorMessage.value = 'Password should be at least 6 characters'
+        toast.warning(errorMessage)
       }
     }
   }
@@ -91,7 +97,7 @@ export const useUserStore = defineStore('user', () => {
         toast.warning('This email is not verified. Check your mailbox and try to login again.')
         return false // Return false to indicate login failed due to email not being confirmed
       } else {
-        errorMessage.value = 'Invalid login credentials or account does not exist. Please try again'
+        errorMessage.value = 'Invalid login credentials. Please try again'
       }
       resetErrorMessageAfterDelay(3500)
       return false // Return false for other errors as well
