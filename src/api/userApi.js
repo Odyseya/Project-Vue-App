@@ -17,7 +17,7 @@ export const createNewUser = async (email, password) => {
   const { data, error } = await supabase.auth.signUp({ email, password })
 
   if (error) {
-    alert(error)
+    // alert(error)
     throw new Error(error.message)
   }
   console.log(data)
