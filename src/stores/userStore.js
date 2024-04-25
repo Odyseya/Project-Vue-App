@@ -54,7 +54,7 @@ export const useUserStore = defineStore('user', () => {
 
       if (error.message) {
         // errorMessage.value = 'Password should be at least 6 characters'
-        toast.warning(errorMessage)
+        toast.warning(error.message)
       }
     }
   }
