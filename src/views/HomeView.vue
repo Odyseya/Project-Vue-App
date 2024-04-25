@@ -60,7 +60,8 @@ const displayedTasks = computed(() => {
 </script>
 
 <template>
-  <div class="max-w-screen-md mx-auto px-4 py-10">
+  <!-- max-w-screen-md -->
+  <div class="w-full sm:max-w-screen-sm mx-auto px-4 py-10">
     <!-- SHOW IF USER VERIFIED EMAIL -->
     <main v-if="user && userStore.errorMessage !== 'Email not confirmed'">
       <h1 class="text-2xl text-white">Your Tasks List</h1>
@@ -69,17 +70,17 @@ const displayedTasks = computed(() => {
       <div class="mt-2 mb-2 p-5 flex items-start bg-[#3490dc52] rounded-md shadow-lg">
         <template v-if="user">
           <div class="flex flex-col gap-y-3 w-full">
-            <label for="taskTitle" class="mb-1 text-md text-white"> Task Title: </label>
+            <label for="taskTitle" class="text-lg mb-1 text-md text-white"> Task Title: </label>
             <input
               type="text"
               id="taskTitle"
               v-model="taskTitle"
               placeholder=" new task (min. 4 digits)"
-              class="p-2 text-gray-500 focus:outline-none focus:ring-2 focus:ring-at-light-green border border-gray-300 rounded-md"
+              class="p-2 text-sm text-gray-500 focus:outline-none focus:ring-2 focus:ring-at-light-green border border-gray-300 rounded-md"
             />
             <button
               @click="_addTask(user)"
-              class="btn self-start text-sm bg-at-light-green duration-200 hover:border-at-light-green hover:bg-white hover:text-at-light-green"
+              class="btn self-start bg-at-light-green duration-200 hover:border-at-light-green hover:bg-white hover:text-at-light-green"
             >
               Add a task
             </button>
@@ -89,28 +90,36 @@ const displayedTasks = computed(() => {
       <!-- TASK COUNTER -->
       <template v-if="tasks && tasks.length">
         <div class="flex flex-col">
-          <h2 class="text-sm text-white">Total number of tasks: {{ tasks.length }}</h2>
+          <h2 class="text-base text-white">Total number of tasks: {{ tasks.length }}</h2>
         </div>
       </template>
 
       <template v-else>
-        <p v-if="!user">Processing.....</p>
-        <p v-else-if="!tasks">Retrieving tasks..</p>
-        <p v-else class="text-md">There are no tasks</p>
+        <p v-if="!user" class="text-base">Processing.....</p>
+        <p v-else-if="!tasks" class="text-base">Retrieving tasks..</p>
+        <p v-else class="text-base">There are no tasks</p>
       </template>
 
       <!-- Dropdown for task filtering -->
-      <div class="flex flex-col mt-2">
+      <div class="flex flex-col mt-2 mb-1">
         <!-- <label for="filter-by" class="mb-1 text-sm text-at-light-green">Filter by</label> -->
         <select
           id="filter-by"
           v-model="filter"
-          class="p-2 text-gray-500 rounded-md focus:outline-none"
+          class="text-sm p-2 text-gray-500 rounded-md focus:outline-none"
         >
-          <option value="all">All Tasks:</option>
+          <option value="all">All Tasks</option>
           <option value="completed">Completed Tasks</option>
           <option value="uncompleted">Uncompleted Tasks</option>
         </select>
+      </div>
+
+      <!-- Display message if there are no tasks based on the filter -->
+      <div v-if="filter === 'completed' && completedTasks.length === 0" class="text-md">
+        <p class="text-md">There are no completed tasks.</p>
+      </div>
+      <div v-if="filter === 'uncompleted' && uncompletedTasks.length === 0" class="text-md">
+        <p class="text-md">There are no uncompleted tasks.</p>
       </div>
       <!-- TASKS LIST DISPLAY VIEW -->
       <ul>
