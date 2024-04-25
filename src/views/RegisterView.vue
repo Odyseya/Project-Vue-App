@@ -30,7 +30,11 @@ const register = async () => {
   }
   try {
     await userStore.register(email.value, password.value)
-    router.push({ name: 'signin' })
+    errorMsg.value = ''
+    email.value = ''
+    password.value = ''
+    confirmPassword.value = ''
+    // router.push({ name: 'signin' })
   } catch (error) {
     console.error(error)
     errorMsg.value = 'Registration failed. Please try again.'
@@ -39,10 +43,10 @@ const register = async () => {
 </script>
 
 <template>
-  <div class="max-w-screen-sm mx-auto px-4 py-10">
+  <div class="max-w-screen-md px-4 py-10 mx-auto">
     <!-- Register -->
     <form @submit.prevent="register" class="p-8 flex flex-col bg-light-grey rounded-md shadow-lg">
-      <h1 class="text-3xl text-at-light-green mb-4">Register</h1>
+      <h1 class="text-3xl text-at-light-green mb-4">Register new Account</h1>
 
       <div class="flex flex-col mb-2">
         <label for="email" class="mb-1 text-sm text-at-light-green">Email</label>
