@@ -1,26 +1,26 @@
-### Task Manager Application
+# Task Manager Application
 
 This Vue.js application is a task management app that allows users to register, log in, manage tasks.
 
 ## Features
 
-# User Registration and Authentication:
+### User Registration and Authentication:
 
 Users can register, log in, and manage their account. The application handles email verification.
 
-# Task Management:
+### Task Management:
 
 Users can add, edit, delete, and toggle the completion status of tasks. Tasks are persisted in a database managed by Supabase.
 
-# Email Verification:
+### Email Verification:
 
 After registration, users are prompted to verify their email address. The application checks the verification status during login attempts.
 
-# Dynamic Task Filtering:
+### Dynamic Task Filtering:
 
 Users can filter their tasks based on completion status, displaying either all tasks, completed tasks, or uncompleted tasks.
 
-# Real-time Updates:
+### Real-time Updates:
 
 The application uses real-time updates from Supabase to reflect changes in tasks immediately.
 
@@ -72,7 +72,7 @@ npm run lint
 
 ## Functionalities
 
-# User Registration and Authentication
+### User Registration and Authentication
 
 Users can register by providing an email and password.
 
@@ -80,7 +80,7 @@ After registration, users are prompted to verify their email address.
 
 Users can log in using their email and password. The application checks if the email is verified during login.
 
-# Email Verification
+### Email Verification
 
 After registration, users receive an email with a verification link.
 The application checks the email verification status during login attempts.
@@ -88,7 +88,7 @@ Users are informed if their email is not verified and are prompted to check thei
 
 The application displays appropriate messages and handles errors gracefully during the registration and login processes.
 
-# Task Management
+### Task Management
 
 Users can add new tasks with a title.
 
