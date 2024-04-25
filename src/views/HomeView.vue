@@ -5,6 +5,9 @@ import { useUserStore } from '@/stores/userStore'
 import { storeToRefs } from 'pinia'
 import { onMounted, ref, computed } from 'vue'
 
+import { useToast } from 'vue-toastification'
+const toast = useToast()
+
 const userStore = useUserStore()
 const tasksStore = useTasksStore()
 const { tasks, completedTasks, uncompletedTasks } = storeToRefs(tasksStore)
@@ -14,12 +17,18 @@ const taskTitle = ref('')
 
 const _addTask = async (user) => {
   console.log('userID: ', user.id)
+  // Validate task title length
+  if (taskTitle.value.length < 4) {
+    // Display a warning message to the user
+    toast.warning('Task title must be at least 4 characters long.')
+    // Exit the function early if validation fails
+    return
+  }
   const task = {
     user_id: user.id,
     title: taskTitle.value,
     is_complete: false
   }
-
   // awaits task to be added then does fetch
   await tasksStore.createNewTask(task)
   // clean the field once task added
@@ -60,12 +69,12 @@ const displayedTasks = computed(() => {
       <div class="mt-2 mb-2 p-5 flex items-start bg-[#3490dc52] rounded-md shadow-lg">
         <template v-if="user">
           <div class="flex flex-col gap-y-3 w-full">
-            <label for="taskTitle" class="mb-1 text-sm text-white"> Task Title: </label>
+            <label for="taskTitle" class="mb-1 text-md text-white"> Task Title: </label>
             <input
               type="text"
               id="taskTitle"
               v-model="taskTitle"
-              placeholder=" new task"
+              placeholder=" new task (min. 4 digits)"
               class="p-2 text-gray-500 focus:outline-none focus:ring-2 focus:ring-at-light-green border border-gray-300 rounded-md"
             />
             <button
@@ -78,7 +87,6 @@ const displayedTasks = computed(() => {
         </template>
       </div>
       <!-- TASK COUNTER -->
-
       <template v-if="tasks && tasks.length">
         <div class="flex flex-col">
           <h2 class="text-sm text-white">Total number of tasks: {{ tasks.length }}</h2>
@@ -88,7 +96,7 @@ const displayedTasks = computed(() => {
       <template v-else>
         <p v-if="!user">Processing.....</p>
         <p v-else-if="!tasks">Retrieving tasks..</p>
-        <p v-else>There are no tasks</p>
+        <p v-else class="text-md">There are no tasks</p>
       </template>
 
       <!-- Dropdown for task filtering -->
