@@ -4,10 +4,9 @@ import { useTasksStore } from '@/stores/tasksStore'
 import { useUserStore } from '@/stores/userStore'
 import { storeToRefs } from 'pinia'
 import { onMounted, ref, computed } from 'vue'
-
 import { useToast } from 'vue-toastification'
-const toast = useToast()
 
+const toast = useToast()
 const userStore = useUserStore()
 const tasksStore = useTasksStore()
 const { tasks, completedTasks, uncompletedTasks } = storeToRefs(tasksStore)
@@ -17,6 +16,7 @@ const taskTitle = ref('')
 
 const _addTask = async (user) => {
   console.log('userID: ', user.id)
+
   // Validate task title length
   if (taskTitle.value.length < 4) {
     // Display a warning message to the user
@@ -29,10 +29,9 @@ const _addTask = async (user) => {
     title: taskTitle.value,
     is_complete: false
   }
-  // awaits task to be added then does fetch
+  // await task to be added then fetch
   await tasksStore.createNewTask(task)
-  // clean the field once task added
-  taskTitle.value = ''
+  taskTitle.value = '' // clean the field once task added
 }
 
 // Fetch tasks when the component is mounted
@@ -60,13 +59,12 @@ const displayedTasks = computed(() => {
 </script>
 
 <template>
-  <!-- max-w-screen-md -->
   <div class="w-full sm:max-w-screen-sm mx-auto px-4 py-10">
     <!-- SHOW IF USER VERIFIED EMAIL -->
     <main v-if="user && userStore.errorMessage !== 'Email not confirmed'">
       <h1 class="text-2xl text-white">Your Tasks List</h1>
-
-      <!-- ADD TASK FIELD AND BUTTON -->
+      <!-- <h2 class="text-md text-white">{{ user.email }}</h2> -->
+      <!-- TASK INPUT FIELD AND BUTTON -->
       <div class="mt-2 mb-2 p-5 flex items-start bg-[#3490dc52] rounded-md shadow-lg">
         <template v-if="user">
           <div class="flex flex-col gap-y-3 w-full">
@@ -87,6 +85,7 @@ const displayedTasks = computed(() => {
           </div>
         </template>
       </div>
+
       <!-- TASK COUNTER -->
       <template v-if="tasks && tasks.length">
         <div class="flex flex-col">
@@ -100,9 +99,9 @@ const displayedTasks = computed(() => {
         <p v-else class="text-base">There are no tasks</p>
       </template>
 
-      <!-- Dropdown for task filtering -->
+      <!-- DROPDOWN MENU TO FILTER TASKS -->
       <div class="flex flex-col mt-2 mb-1">
-        <!-- <label for="filter-by" class="mb-1 text-sm text-at-light-green">Filter by</label> -->
+        <!-- <label for="filter-by">Filter by</label> -->
         <select
           id="filter-by"
           v-model="filter"
@@ -121,6 +120,7 @@ const displayedTasks = computed(() => {
       <div v-if="filter === 'uncompleted' && uncompletedTasks.length === 0" class="text-md">
         <p class="text-md">There are no uncompleted tasks.</p>
       </div>
+
       <!-- TASKS LIST DISPLAY VIEW -->
       <ul>
         <TaskItem
@@ -131,6 +131,7 @@ const displayedTasks = computed(() => {
         ></TaskItem>
       </ul>
     </main>
+
     <!-- SHOW IF USER DIDNT VERIFY EMAIL -->
     <div v-else class="mb-10 p-4 bg-light-grey rounded-md shadow-lg">
       <p class="text-at-light-green">

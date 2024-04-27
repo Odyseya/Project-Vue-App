@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, ref, onMounted } from 'vue'
+import { defineProps, ref } from 'vue'
 import { useTasksStore } from '@/stores/tasksStore'
 
 const tasksStore = useTasksStore()
@@ -33,21 +33,20 @@ const _editTask = async () => {
   }
 }
 
+// UPDATE
 const toggleTaskCompletion = async () => {
   if (props.task.is_complete) {
     await tasksStore.markTaskAsCompleteById(props.task.id)
   } else {
     await tasksStore.markTaskAsIncompleteById(props.task.id)
   }
-  // needed?
   await tasksStore.fetchTasks()
 }
 </script>
 
 <template>
   <div class="flex">
-    <li class="items-start w-full bg-[#3490dc52] rounded-md shadow-lg p-4">
-      <!-- <li class="items-start w-full bg-white rounded-md shadow-lg p-4"> -->
+    <li class="items-start w-full bg-[#3490dc52] rounded-lg shadow-md p-4 mt-2">
       <!-- EDIT TITLE  -->
       <div v-if="!editMode" class="text-lg font-semibold text-white">
         {{ task.title }}
@@ -61,10 +60,11 @@ const toggleTaskCompletion = async () => {
       />
 
       <!-- CHECKBOX TO TOGGLE TASK COMPLETION -->
-      <!-- Unique ID for each checkbox to prevent toggling the first checkbo clicking on any "completed" label-->
+      <!-- Unique ID for each checkbox to prevent toggling the first checkbox clicking on any "completed" label-->
       <div>
         <input
           type="checkbox"
+          class="mr-1"
           id="completionCheckbox"
           :id="`completionCheckbox-${task.id}`"
           v-model="task.is_complete"
@@ -82,15 +82,4 @@ const toggleTaskCompletion = async () => {
   </div>
 </template>
 
-<style scoped>
-input[type='checkbox'] {
-  margin-right: 5px;
-}
-
-li {
-  border-radius: 10px;
-  margin-top: 10px;
-  padding: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-</style>
+<style scoped></style>

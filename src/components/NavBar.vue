@@ -1,10 +1,26 @@
+<script setup>
+import { useUserStore } from '@/stores/userStore'
+import { computed } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+const userStore = useUserStore()
+
+// to rotate navbar sign/out visibility
+const user = computed(() => userStore.user)
+
+const logout = async () => {
+  await userStore.signOut()
+  router.push({ name: 'signin' })
+}
+</script>
+
 <template>
   <header class="bg-[#3490dc52]">
     <nav class="container py-5 px-4 flex flex-col gap-4 items-center sm:flex-row">
       <div class="flex items-center gap-x-4">
         <img class="w-14" src="../assets/logo.svg" alt="Vue logo" />
-        <!-- <RouterView /> -->
-        <h1 class="text-lg">To Do App</h1>
+        <h1 class="text-lg">Task Planner</h1>
       </div>
 
       <ul class="flex flex-1 justify-end gap-x-10">
@@ -17,25 +33,3 @@
     </nav>
   </header>
 </template>
-
-<script setup>
-import { useUserStore } from '@/stores/userStore'
-import { computed } from 'vue'
-import { useRouter } from 'vue-router'
-
-const router = useRouter()
-const userStore = useUserStore()
-
-// added to rotate navbar sign/out visibility
-const user = computed(() => userStore.user)
-
-const logout = async () => {
-  try {
-    await userStore.signOut()
-    // redirect to the sign-in page or another appropriate page
-    router.push({ name: 'signin' })
-  } catch (error) {
-    console.error('Error logging out:', error.message)
-  }
-}
-</script>

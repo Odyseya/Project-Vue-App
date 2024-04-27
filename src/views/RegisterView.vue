@@ -6,23 +6,12 @@ import { useUserStore } from '@/stores/userStore'
 const router = useRouter()
 const userStore = useUserStore()
 
-const errorMsg = ref(null)
 const email = ref('')
 const password = ref('')
-
 const confirmPassword = ref('')
+const errorMsg = ref(null)
 
 // bind user's input (user, pass) to register action of userStore
-// const register = async () => {
-//   try {
-//     await userStore.register(email.value, password.value)
-//     router.push({ name: 'home' })
-//   } catch (error) {
-//     console.error(error)
-//   }
-// }
-
-// to test
 const register = async () => {
   if (password.value !== confirmPassword.value) {
     errorMsg.value = 'Passwords do not match. Please try again.'
@@ -44,10 +33,11 @@ const register = async () => {
 
 <template>
   <div class="max-w-screen-md px-4 py-10 mx-auto">
-    <!-- Register -->
+    <!-- Register form-->
     <form @submit.prevent="register" class="p-8 flex flex-col bg-light-grey rounded-md shadow-lg">
       <h1 class="text-3xl text-at-light-green mb-4">Register new Account</h1>
 
+      <!--  Email Field -->
       <div class="flex flex-col mb-2">
         <label for="email" class="mb-1 text-sm text-at-light-green">Email</label>
         <input
@@ -59,6 +49,7 @@ const register = async () => {
         />
       </div>
 
+      <!--  Password Field -->
       <div class="flex flex-col mb-2">
         <label for="password" class="mb-1 text-sm text-at-light-green">Password</label>
         <input
@@ -83,6 +74,7 @@ const register = async () => {
           v-model="confirmPassword"
         />
       </div>
+
       <!-- Display the error message from this component -->
       <div v-if="errorMsg" class="mb-8 p-2 rounded-md bg-light-grey shadow-lg">
         <p class="text-red-500">{{ errorMsg }}</p>
