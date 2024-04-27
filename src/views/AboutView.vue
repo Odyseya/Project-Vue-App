@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-  <main class="p-8">
+  <main class="p-8 flex flex-col justify-center items-center h-full">
     <h1 class="text-3xl font-bold mb-4">About Us</h1>
     <p class="text-base mb-4">
       Welcome to our task management app! Please log in to access Homepage. We're dedicated to
