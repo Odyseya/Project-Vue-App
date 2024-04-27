@@ -30,11 +30,8 @@ export const useTasksStore = defineStore('tasks', () => {
       // update the state
       const fetchedTasks = await fetchAllTasks()
       console.log('Fetched tasks:', fetchedTasks)
-      // tasks.value = fetchedTasks
-
-      // Sort tasks using the new function
+      // Sort tasks using the sort function
       const sortedTasks = sortTasks(fetchedTasks)
-
       // Update the state with the sorted tasks
       tasks.value = sortedTasks
     } catch (error) {
@@ -66,11 +63,6 @@ export const useTasksStore = defineStore('tasks', () => {
     }
   }
 
-  /**
-   * @todo - Intenatar agrupar este método markTaskAsCompleteById y
-   * el método markTaskAsIncompleteById, de forma de que hay un
-   * único método.
-   */
   async function markTaskAsCompleteById(id) {
     try {
       const updatedTask = await updateTaskStatus(id, true)
@@ -99,7 +91,7 @@ export const useTasksStore = defineStore('tasks', () => {
 
   async function updateTaskTitle(taskId, newTitle) {
     try {
-      // update the task remotely supa
+      // update the task remotely supabase
       const updatedTask = await updateTask(taskId, { title: newTitle })
       if (updatedTask) {
         //Find the index of the task in the local tasks array
