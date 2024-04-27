@@ -1,8 +1,21 @@
+<script setup>
+import NavBar from './components/NavBar.vue'
+import { useUserStore } from '@/stores/userStore'
+import { onUnmounted } from 'vue'
+
+const userStore = useUserStore()
+
+// remove the callback FROM setupAuthListener
+// ensures that the auth listener is properly cleaned up.
+onUnmounted(() => {
+  userStore.unsubscribeAuthListener()
+})
+</script>
+
 <template>
   <header>
     <div class="min-h-full font-Poppins box-border">
       <nav>
-        <!-- styled tailwind -->
         <NavBar />
       </nav>
     </div>
@@ -11,65 +24,4 @@
   <RouterView />
 </template>
 
-<script setup>
-import { useUserStore } from '@/stores/userStore'
-import { onUnmounted } from 'vue'
-
-const userStore = useUserStore()
-
-//ensure that the auth listener is properly cleaned up.
-onUnmounted(() => {
-  userStore.unsubscribeAuthListener()
-})
-
-import NavBar from './components/NavBar.vue'
-</script>
-
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-</style>
-<!-- 
-// suggested by iron portal
-// import { onMounted } from 'vue'
-// import { storeToRefs } from 'pinia'
-// import { useRouter } from 'vue-router'
-// import { useUserStore } from '@/stores/userStore'
-
-// const router = useRouter()
-// const userStore = useUserStore()
-// const { user } = storeToRefs(userStore)
-
-// onMounted(async () => {
-//   try {
-//     await userStore.fetchUser() // Fetch the user's authentication status
-//     if (!userStore.user.value) {
-//       // If the user is not authenticated, redirect them to the sign-in page
-//       router.push({ name: 'signin' })
-//     } else {
-//       // If the user is authenticated, continue to the dashboard or home page
-//       router.push({ name: 'home' })
-//     }
-//   } catch (e) {
-//     console.error(e)
-//     // Optionally, handle the error, e.g., by showing an error message
-//   }
-// }) -->
+<style scoped></style>

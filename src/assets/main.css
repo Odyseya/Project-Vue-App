@@ -5,17 +5,11 @@
 @tailwind utilities;
 
 #app {
-  max-width: 1024px;
+  /* max-width: 1400px; */
   margin: 0 auto;
-  /* font-weight: normal; */
-  /* background-color: var(--vt-c-blue-dark); */
-  /* color: #ffffff; */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  /* align-items: center; */
-  /* zweza okno */
-  /* padding: 0 2rem; nav nie idzie full*/
 }
 
 @media (hover: hover) {
