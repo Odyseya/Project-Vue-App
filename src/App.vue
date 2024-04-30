@@ -1,44 +1,27 @@
-<template>
-	<header>
-		<div class="wrapper">
-			<nav>
-				<RouterLink to="/">Home</RouterLink>
-				<RouterLink to="/about">About</RouterLink>
-			</nav>
-		</div>
-	</header>
+<script setup>
+import NavBar from './components/NavBar.vue'
+import { useUserStore } from '@/stores/userStore'
+import { onUnmounted } from 'vue'
 
-	<RouterView />
+const userStore = useUserStore()
+
+// remove the callback FROM setupAuthListener
+// ensures that the auth listener is properly cleaned up.
+onUnmounted(() => {
+  userStore.unsubscribeAuthListener()
+})
+</script>
+
+<template>
+  <header>
+    <div class="min-h-full font-Poppins box-border">
+      <nav>
+        <NavBar />
+      </nav>
+    </div>
+  </header>
+
+  <RouterView />
 </template>
 
-<style scoped>
-header {
-	line-height: 1.5;
-	max-height: 100vh;
-}
-
-nav {
-	width: 100%;
-	font-size: 12px;
-	text-align: center;
-	margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-	color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-	background-color: transparent;
-}
-
-nav a {
-	display: inline-block;
-	padding: 0 1rem;
-	border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-	border: 0;
-}
-</style>
+<style scoped></style>
